@@ -54,23 +54,23 @@
           "type": "string",
           "required": true,
           "source": "input",
-          "values": [],
-          "format": "457|533"
+          "values": ["koordináta"],
+          "format": "x|y"
         },
         {
           "name": "coordinate2",
           "type": "string",
           "required": true,
           "source": "input",
-          "values": [],
-          "format": "566|478"
+          "values": ["koordináta"],
+          "format": "x|y"
         },
         {
           "name": "time",
           "type": "string",
           "required": true,
           "source": "input",
-          "values": [],
+          "values": ["dátum"],
           "format": "YYYY.MM.DD HH:MM:SS"
         },
         {
@@ -78,7 +78,7 @@
           "type": "string",
           "required": true,
           "source": "autocomplete",
-          "values": [],
+          "values": ["unit"],
           "format": ""
         }
       ],
@@ -93,8 +93,8 @@
           "type": "number",
           "required": true,
           "source": "input",
-          "values": [],
-          "format": "1"
+          "values": ["number"],
+          "format": ""
         }
       ],
       "subcommands": {},
@@ -108,8 +108,8 @@
           "type": "number",
           "required": true,
           "source": "input",
-          "values": [],
-          "format": "min: 1"
+          "values": ["number"],
+          "format": ""
         }
       ],
       "subcommands": {},
@@ -123,7 +123,7 @@
           "type": "string",
           "required": true,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": ""
         }
       ],
@@ -138,7 +138,7 @@
           "type": "string",
           "required": true,
           "source": "autocomplete",
-          "values": [],
+          "values": ["statisztika"],
           "format": ""
         }
       ],
@@ -159,7 +159,7 @@
           "type": "string",
           "required": true,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": ""
         },
         {
@@ -204,7 +204,7 @@
           "type": "string",
           "required": true,
           "source": "input",
-          "values": [],
+          "values": ["koordináta"],
           "format": "max. 5 koordináta; elválasztó: vessző, szóköz, pontosvessző vagy új sor"
         },
         {
@@ -212,7 +212,7 @@
           "type": "number",
           "required": true,
           "source": "input",
-          "values": [],
+          "values": ["number"],
           "format": "min: 1; max: 10000"
         },
         {
@@ -230,7 +230,7 @@
           "type": "number",
           "required": false,
           "source": "input",
-          "values": [],
+          "values": ["number"],
           "format": "min: 1; max: 35000"
         },
         {
@@ -238,7 +238,7 @@
           "type": "number",
           "required": false,
           "source": "input",
-          "values": [],
+          "values": ["number"],
           "format": "min: 1; max: 35000"
         },
         {
@@ -246,7 +246,7 @@
           "type": "number",
           "required": false,
           "source": "input",
-          "values": [],
+          "values": ["number"],
           "format": "min: 1; max: 35000"
         },
         {
@@ -254,7 +254,7 @@
           "type": "number",
           "required": false,
           "source": "input",
-          "values": [],
+          "values": ["number"],
           "format": "min: 1; max: 35000"
         },
         {
@@ -262,7 +262,7 @@
           "type": "number",
           "required": false,
           "source": "input",
-          "values": [],
+          "values": ["number"],
           "format": "min: 1; max: 35000"
         }
       ],
@@ -277,7 +277,7 @@
           "type": "string",
           "required": true,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": ""
         }
       ],
@@ -292,9 +292,7 @@
           "type": "string",
           "required": true,
           "source": "choice",
-          "values": [
-            "SERVERS domain lista"
-          ],
+          "values": ["domain"],
           "format": ""
         }
       ],
@@ -420,7 +418,7 @@
       "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep, Minden felhasználó"
     },
     "/create-poll": {
-      "description": "Szavazás (Igen / Nem / Tartózkodom)",
+      "description": "Anonim szavazás (Igen / Nem / Tartózkodom)",
       "options": [
         {
           "name": "question",
@@ -435,8 +433,8 @@
           "type": "number",
           "required": false,
           "source": "input",
-          "values": [],
-          "format": "óra; alapértelmezett: 1"
+          "values": ["number"],
+          "format": "min. 1 óra; alapértelmezett: 1"
         }
       ],
       "subcommands": {},
@@ -450,7 +448,7 @@
           "type": "string",
           "required": true,
           "source": "input",
-          "values": [],
+          "values": ["koordináta"],
           "format": "max. 5 koordináta; elválasztó: vessző, szóköz, pontosvessző vagy új sor"
         },
         {
@@ -458,7 +456,7 @@
           "type": "number",
           "required": true,
           "source": "input",
-          "values": [],
+          "values": ["number"],
           "format": "min: 1; max: 10000"
         },
         {
@@ -494,7 +492,7 @@
           "type": "string",
           "required": false,
           "source": "input",
-          "values": [],
+          "values": ["x%"],
           "format": "pl.: 35%"
         }
       ],
@@ -515,7 +513,7 @@
           "type": "string",
           "required": true,
           "source": "autocomplete",
-          "values": [],
+          "values": ["statisztika"],
           "format": ""
         },
         {
@@ -523,7 +521,7 @@
           "type": "string",
           "required": true,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": ""
         }
       ],
@@ -656,7 +654,7 @@
           "type": "string",
           "required": true,
           "source": "input",
-          "values": [],
+          "values": ["dátum"],
           "format": "YYYY.MM.DD HH:MM:SS"
         },
         {
@@ -664,7 +662,7 @@
           "type": "string",
           "required": true,
           "source": "input",
-          "values": [],
+          "values": ["dátum"],
           "format": "YYYY.MM.DD HH:MM:SS"
         },
         {
@@ -672,7 +670,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": "több klán esetén elválasztó: &"
         },
         {
@@ -680,7 +678,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["játékos név"],
           "format": "több játékos esetén elválasztó: &"
         },
         {
@@ -688,7 +686,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": "több klán esetén elválasztó: &"
         },
         {
@@ -696,7 +694,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["játékos név"],
           "format": "több játékos esetén elválasztó: &"
         }
       ],
@@ -717,7 +715,7 @@
           "type": "string",
           "required": true,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": "több klán esetén elválasztó: &"
         },
         {
@@ -725,7 +723,7 @@
           "type": "attachment",
           "required": true,
           "source": "input",
-          "values": [],
+          "values": ["fájl"],
           "format": ".txt"
         }
       ],
@@ -829,7 +827,7 @@
           "type": "role",
           "required": true,
           "source": "input",
-          "values": [],
+          "values": ["szerep"],
           "format": ""
         }
       ],
@@ -911,8 +909,8 @@
               "type": "channel",
               "required": false,
               "source": "input",
-              "values": [],
-              "format": "GuildText | GuildAnnouncement | GuildVoice | GuildForum | GuildStageVoice"
+              "values": ["csatorna neve"],
+              "format": ""
             }
           ],
           "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
