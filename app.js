@@ -245,6 +245,7 @@ async function init() {
   buildSidebar();
   initSidebarToggle();
   await loadRevenue();
+  await loadVisitorStats();
   
   renderPage(
     { title: t('pages.firstSteps.title'), text: t('pages.firstSteps.text') },
@@ -907,6 +908,65 @@ async function loadRevenue(){
 
   document.getElementById('progressAmount').textContent = `${effective.toFixed(0)} / ${monthlyGoal}`;
   document.getElementById('progressFill').style.width = `${pct}%`;
+}
+
+// ================================================================
+// budapesti dátum lekérése YYYY-MM-DD formátumban
+// ================================================================
+function getBudapestDateString() {
+  const formatter = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Budapest',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
+
+  const parts = formatter.formatToParts(new Date());
+  const year = parts.find(p => p.type === 'year')?.value;
+  const month = parts.find(p => p.type === 'month')?.value;
+  const day = parts.find(p => p.type === 'day')?.value;
+
+  return `${year}-${month}-${day}`;
+}
+
+// ================================================================
+// látogatói statisztika betöltése GoatCounterből
+// ================================================================
+async function loadVisitorStats() {
+  const site = 'https://SAJATKOD.goatcounter.com';
+  const today = getBudapestDateString();
+
+  const totalUrl = `${site}/counter/TOTAL.json`;
+  const todayUrl = `${site}/counter/TOTAL.json?start=${encodeURIComponent(today)}&end=${encodeURIComponent(today)}`;
+
+  try {
+    const [todayRes, totalRes] = await Promise.all([
+      fetch(todayUrl, { cache: 'no-store' }),
+      fetch(totalUrl, { cache: 'no-store' })
+    ]);
+
+    if (!todayRes.ok || !totalRes.ok) {
+      throw new Error('Nem sikerült lekérni a GoatCounter adatokat.');
+    }
+
+    const [todayData, totalData] = await Promise.all([
+      todayRes.json(),
+      totalRes.json()
+    ]);
+
+    const todayEl = document.getElementById('visitorToday');
+    const totalEl = document.getElementById('visitorTotal');
+
+    if (todayEl) {
+      todayEl.textContent = todayData.count || '0';
+    }
+
+    if (totalEl) {
+      totalEl.textContent = totalData.count || '0';
+    }
+  } catch (error) {
+    console.error('Látogatói statisztika hiba:', error);
+  }
 }
 
 init();
