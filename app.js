@@ -245,7 +245,6 @@ async function init() {
   buildSidebar();
   initSidebarToggle();
   await loadRevenue();
-  await loadVisitorStats();
   
   renderPage(
     { title: t('pages.firstSteps.title'), text: t('pages.firstSteps.text') },
@@ -908,38 +907,6 @@ async function loadRevenue(){
 
   document.getElementById('progressAmount').textContent = `${effective.toFixed(0)} / ${monthlyGoal}`;
   document.getElementById('progressFill').style.width = `${pct}%`;
-}
-
-// ================================================================
-// látogatói statisztika betöltése Apps Script webappról
-// ================================================================
-async function loadVisitorStats() {
-  const endpoint = 'IDE_JON_A_GOOGLE_APPS_SCRIPT_EXEC_URL?action=stats';
-
-  try {
-    const response = await fetch(endpoint, {
-      method: 'GET',
-      cache: 'no-store'
-    });
-
-    const data = await response.json();
-
-    if (!data.ok) {
-      throw new Error(data.error || 'Ismeretlen statisztikai hiba');
-    }
-
-    const formatNumber = (value) => Number(value || 0).toLocaleString('hu-HU');
-
-    const onlineEl = document.getElementById('visitorOnline');
-    const todayEl = document.getElementById('visitorToday');
-    const totalEl = document.getElementById('visitorTotal');
-
-    if (onlineEl) onlineEl.textContent = formatNumber(data.online);
-    if (todayEl) todayEl.textContent = formatNumber(data.today);
-    if (totalEl) totalEl.textContent = formatNumber(data.total);
-  } catch (error) {
-    console.error('Nem sikerült betölteni a látogatói statisztikát:', error);
-  }
 }
 
 init();
