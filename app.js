@@ -176,7 +176,18 @@ const DEFAULT_COMMAND_DOCS = {
   }
 };
 
-const state = { lang: 'hu', theme: 'light', menu: null, i18n: null, commandDocs: null, active: null, activeGroupId: null, discordWidgetLoaded: false, discordWidgetTheme: null, discordWidgetOutsideBound: false };
+const state = {
+  lang: 'hu',
+  theme: 'light',
+  menu: null,
+  i18n: null,
+  commandDocs: null,
+  active: null,
+  activeGroupId: null,
+  discordWidgetLoaded: false,
+  discordWidgetTheme: null,
+  discordWidgetOutsideBound: false
+};
 
 const icons = {
   intro: `<svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 5v14M4 10h16"/></svg>`,
@@ -250,9 +261,9 @@ function applyTheme() {
 }
 
 // ================================================================
-// oldalsáv nyitás / zárás
+// oldalsáv állapot beállítása
 // ================================================================
-function initSidebarToggle(){
+function setSidebarHidden(hidden){
   const shell = document.querySelector('.sidebar-shell');
   const appShell = document.querySelector('.app-shell');
   const btn = document.getElementById('sidebarToggle');
@@ -260,19 +271,37 @@ function initSidebarToggle(){
 
   if(!shell || !btn || !collapsedBtn || !appShell) return;
 
-  const applyState = (hidden) => {
-    shell.classList.toggle('submenus-hidden', hidden);
-    appShell.classList.toggle('sidebar-collapsed', hidden);
-    btn.innerHTML = sidebarToggleIcon(true);
-    collapsedBtn.innerHTML = sidebarToggleIcon(false);
-    localStorage.setItem('submenusHidden', hidden ? '1' : '0');
-  };
+  shell.classList.toggle('submenus-hidden', hidden);
+  appShell.classList.toggle('sidebar-collapsed', hidden);
+  btn.innerHTML = sidebarToggleIcon(true);
+  collapsedBtn.innerHTML = sidebarToggleIcon(false);
+
+  localStorage.setItem('submenusHidden', hidden ? '1' : '0');
+}
+
+// ================================================================
+// mobil nézetben oldalsáv automatikus elrejtése kiválasztás után
+// ================================================================
+function hideSidebarAfterSelectionOnMobile(){
+  if(window.innerWidth <= 1100){
+    setSidebarHidden(true);
+  }
+}
+
+// ================================================================
+// oldalsáv nyitás / zárás
+// ================================================================
+function initSidebarToggle(){
+  const btn = document.getElementById('sidebarToggle');
+  const collapsedBtn = document.getElementById('sidebarToggleCollapsed');
+
+  if(!btn || !collapsedBtn) return;
 
   const hidden = localStorage.getItem('submenusHidden') === '1';
-  applyState(hidden);
+  setSidebarHidden(hidden);
 
-  btn.onclick = () => applyState(true);
-  collapsedBtn.onclick = () => applyState(false);
+  btn.onclick = () => setSidebarHidden(true);
+  collapsedBtn.onclick = () => setSidebarHidden(false);
 }
 
 // ================================================================
@@ -463,7 +492,10 @@ function buildChild(child, group){
 
     child.commands.forEach(cmd => {
       const b = el('button', 'cmd-option', cmd);
-      b.onclick = () => renderCommand(cmd, group.labelKey, child.labelKey);
+      b.onclick = () => {
+        renderCommand(cmd, group.labelKey, child.labelKey);
+        hideSidebarAfterSelectionOnMobile();
+      };
       list.appendChild(b);
     });
 
@@ -490,6 +522,7 @@ function buildChild(child, group){
         state.theme = mode;
         localStorage.setItem('theme', state.theme);
         applyTheme();
+        hideSidebarAfterSelectionOnMobile();
       };
       list.appendChild(b);
     });
@@ -519,6 +552,7 @@ function buildChild(child, group){
         buildTopbar();
         buildIconRail();
         buildSidebar();
+        hideSidebarAfterSelectionOnMobile();
       };
       list.appendChild(b);
     });
@@ -534,6 +568,7 @@ function buildChild(child, group){
         { title: t(`${child.contentKey}.title`), text: t(`${child.contentKey}.text`) },
         [t(group.labelKey), t(child.labelKey)]
       );
+      hideSidebarAfterSelectionOnMobile();
     }
   };
 
