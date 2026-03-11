@@ -118,7 +118,10 @@ const DEFAULT_I18N = {
     "content.optionSource": "Forrás",
     "content.optionFormat": "Formátum",
     "content.optionValue": "Lehetséges értékek",
-    "content.demoImage": "Demó kép"
+    "content.demoImage": "Demó kép",
+    "content.viewImage": "Kép megtekintése",
+    "content.imageNotFound": "Ehhez a parancshoz nem található kép.",
+    "content.close": "Bezárás"
   },
   "en": {
     "topbar.discordAdd": "Add to Discord",
@@ -132,7 +135,10 @@ const DEFAULT_I18N = {
     "content.optionSource": "Source",
     "content.optionFormat": "Format",
     "content.optionValue": "Possible values",
-    "content.demoImage": "Demo image"
+    "content.demoImage": "Demo image",
+    "content.viewImage": "View image",
+    "content.imageNotFound": "No image was found for this command.",
+    "content.close": "Close"
   },
   "ar": { "topbar.discordAdd": "أضف إلى ديسكورد", "topbar.support": "الدعم", "topbar.language": "اللغة", "topbar.monthlyGoal": "الهدف الشهري" },
   "cs": { "topbar.discordAdd": "Přidat na Discord", "topbar.support": "Podpora", "topbar.language": "Jazyk", "topbar.monthlyGoal": "Měsíční cíl" },
@@ -222,6 +228,7 @@ async function init() {
   applyTheme();
   state.activeGroupId = state.menu.nav?.[0]?.id || null;
 
+  createImageModal();
   buildTopbar();
   buildIconRail();
   buildSidebar();
@@ -310,6 +317,8 @@ function buildTopbar() {
   document.onclick = (e) => {
     if (!picker.contains(e.target)) picker.classList.remove('open');
   };
+
+  syncImageModalTexts();
 }
 
 // ================================================================
@@ -540,6 +549,106 @@ function renderPage(page, crumb){
 }
 
 // ================================================================
+// kép modal létrehozása
+// ================================================================
+function createImageModal() {
+  if (document.getElementById('imageModal')) return;
+
+  const modal = document.createElement('div');
+  modal.id = 'imageModal';
+  modal.className = 'image-modal';
+  modal.innerHTML = `
+    <div class="image-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="imageModalTitle">
+      <div class="image-modal-header">
+        <strong id="imageModalTitle"></strong>
+        <button id="imageModalClose" class="image-modal-close" type="button" aria-label="Bezárás">×</button>
+      </div>
+      <div class="image-modal-body">
+        <img id="imageModalImage" alt="" />
+        <p id="imageModalMessage" class="image-modal-message"></p>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeImageModal();
+    }
+  });
+
+  document.getElementById('imageModalClose')?.addEventListener('click', closeImageModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeImageModal();
+    }
+  });
+
+  syncImageModalTexts();
+}
+
+// ================================================================
+// kép modal szövegeinek frissítése
+// ================================================================
+function syncImageModalTexts() {
+  const title = document.getElementById('imageModalTitle');
+  const closeButton = document.getElementById('imageModalClose');
+
+  if (title) {
+    title.textContent = t('content.viewImage');
+  }
+
+  if (closeButton) {
+    closeButton.setAttribute('aria-label', t('content.close'));
+  }
+}
+
+// ================================================================
+// kép modal megnyitása
+// ================================================================
+function openImageModal(src, altText = '') {
+  const modal = document.getElementById('imageModal');
+  const image = document.getElementById('imageModalImage');
+  const message = document.getElementById('imageModalMessage');
+
+  if (!modal || !image || !message) return;
+
+  modal.classList.add('open');
+  document.body.classList.add('modal-open');
+
+  image.style.display = 'none';
+  image.removeAttribute('src');
+  image.alt = altText;
+  message.textContent = '';
+
+  const preview = new Image();
+
+  preview.onload = () => {
+    image.src = src;
+    image.style.display = 'block';
+  };
+
+  preview.onerror = () => {
+    message.textContent = t('content.imageNotFound');
+  };
+
+  preview.src = src;
+}
+
+// ================================================================
+// kép modal bezárása
+// ================================================================
+function closeImageModal() {
+  const modal = document.getElementById('imageModal');
+  if (!modal) return;
+
+  modal.classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+
+// ================================================================
 // parancs dokumentáció feloldása főparancsra és alparancsra
 // ================================================================
 function getResolvedCommandDoc(cmd){
@@ -647,6 +756,7 @@ function formatCommandValuesCell(option){
 // ================================================================
 function renderCommand(cmd, groupKey, subKey){
   const imageName = cmd.replace(/^\//, '').replace(/\s+/g, '-');
+  const imagePath = `images/${imageName}.png`;
   const { docsConfig, doc, parentDoc } = getResolvedCommandDoc(cmd);
 
   const commandOptions = getCommandOptions(doc, parentDoc, docsConfig);
@@ -673,6 +783,13 @@ function renderCommand(cmd, groupKey, subKey){
     <h1>${cmd}</h1>
     <p>${description}</p>
     <p><strong>${t('content.access')}:</strong> ${formatDisplayValue(access)}</p>
+
+    <div class="command-actions">
+      <button id="commandImageButton" class="command-image-button" type="button">
+        ${t('content.viewImage')}
+      </button>
+    </div>
+
     <div class="table-wrap">
       <table>
         <thead>
@@ -688,8 +805,12 @@ function renderCommand(cmd, groupKey, subKey){
         <tbody>${tableBody}</tbody>
       </table>
     </div>
-    <div class="figure"><strong>${t('content.demoImage')}:</strong><img src="images/${imageName}.png" alt="${cmd} demo" onerror="this.alt='Kép nem található'; this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p>Kép nem található: images/${imageName}.png</p>')"/></div>
   </div>`;
+
+  const imageButton = document.getElementById('commandImageButton');
+  if (imageButton) {
+    imageButton.onclick = () => openImageModal(imagePath, `${cmd} demo`);
+  }
 }
 
 // ================================================================
