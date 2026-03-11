@@ -49,7 +49,7 @@ const DEFAULT_MENU = {
         { "type": "commandGroup", "id": "logging", "labelKey": "commands.logging", "commands": ["/logging"] },
         { "type": "commandGroup", "id": "stats", "labelKey": "commands.stats", "commands": ["/check-tribe-orientation", "/compare-tribes-orientation", "/create-tribe-daily-stat", "/compare-tribes-daily-stat", "/create-war-stat"] },
         { "type": "commandGroup", "id": "clan", "labelKey": "commands.clan", "commands": ["/set-bot-role", "/create-defender-pack", "/create-resource-pack", "/create-ticket-panel", "/create-mail-list", "/create-poll", "/create-welcome-channel"] },
-        { "type": "commandGroup", "id": "notifications", "labelKey": "commands.notifications", "commands": ["/create-conquer-notification", "/create-new-world-notification", "/toggle-coords-info", "/show-report"] },
+        { "type": "commandGroup", "id": "notifications", "labelKey": "commands.notifications", "commands": ["/create-conquer-notification", "/create-new-world-notification", "/toggle-coords-info", "/toggle-public-report"] },
         { "type": "commandGroup", "id": "calculators", "labelKey": "commands.calculators", "commands": ["/calculate-backtime", "/calculate-coin-limit", "/calculate-noblemen-limit"] },
         { "type": "commandGroup", "id": "settings", "labelKey": "commands.settings", "commands": ["/settings list", "/settings delete-default", "/settings delete-channel"] },
         { "type": "commandGroup", "id": "emojis", "labelKey": "commands.emojis", "commands": ["/add-emojis"] },
@@ -112,12 +112,28 @@ const DEFAULT_I18N = {
     "pages.terms.title": "Terms of Service",
     "pages.terms.text": "A szolgáltatás használatával elfogadod a szerver és a bot szabályrendszerét.",
     "content.access": "Hozzáférés",
-    "content.optionName": "Option name",
-    "content.optionType": "Option type",
-    "content.optionValue": "Option value",
+    "content.optionName": "Opció neve",
+    "content.optionType": "Típus",
+    "content.optionRequired": "Kötelező",
+    "content.optionSource": "Forrás",
+    "content.optionFormat": "Formátum",
+    "content.optionValue": "Lehetséges értékek",
     "content.demoImage": "Demó kép"
   },
-  "en": { "topbar.discordAdd": "Add to Discord", "topbar.support": "Support", "topbar.language": "Language", "topbar.monthlyGoal": "Monthly goal" },
+  "en": {
+    "topbar.discordAdd": "Add to Discord",
+    "topbar.support": "Support",
+    "topbar.language": "Language",
+    "topbar.monthlyGoal": "Monthly goal",
+    "content.access": "Access",
+    "content.optionName": "Option name",
+    "content.optionType": "Type",
+    "content.optionRequired": "Required",
+    "content.optionSource": "Source",
+    "content.optionFormat": "Format",
+    "content.optionValue": "Possible values",
+    "content.demoImage": "Demo image"
+  },
   "ar": { "topbar.discordAdd": "أضف إلى ديسكورد", "topbar.support": "الدعم", "topbar.language": "اللغة", "topbar.monthlyGoal": "الهدف الشهري" },
   "cs": { "topbar.discordAdd": "Přidat na Discord", "topbar.support": "Podpora", "topbar.language": "Jazyk", "topbar.monthlyGoal": "Měsíční cíl" },
   "nl": { "topbar.discordAdd": "Toevoegen aan Discord", "topbar.support": "Support", "topbar.language": "Taal", "topbar.monthlyGoal": "Maandelijks doel" },
@@ -137,7 +153,7 @@ const DEFAULT_I18N = {
 
 
 const DEFAULT_COMMAND_DOCS = {
-  defaultAccess: 'Bárki',
+  defaultAccess: '',
   defaultDescription: 'A bot automatizált folyamatot indít, validációkat végez, majd naplózza az eredményt.',
   defaultOptions: [
     { name: 'target', type: 'string', required: false, values: ['player', 'tribe', 'ally'] },
@@ -145,6 +161,7 @@ const DEFAULT_COMMAND_DOCS = {
   ],
   commands: {
     '/register-world-channel': {
+      access: '',
       description: 'Világ csatornához regisztrálása. A parancsban kötelezően meg kell adni egy domaint és egy világot; a világ mező automatikus kiegészítést használ.',
       options: [
         { name: 'domain', type: 'string', required: true, values: ['SERVERS domain lista (choice)'] },
@@ -403,25 +420,140 @@ function renderPage(page, crumb){
   document.getElementById('content').innerHTML = `<div class="card"><h1>${page.title}</h1><p>${page.text}</p></div>`;
 }
 
+// ================================================================
+// parancs dokumentáció feloldása főparancsra és alparancsra
+// ================================================================
+function getResolvedCommandDoc(cmd){
+  const docsConfig = state.commandDocs || DEFAULT_COMMAND_DOCS;
+  const directDoc = docsConfig.commands?.[cmd];
+
+  if (directDoc) {
+    return {
+      docsConfig,
+      doc: directDoc,
+      parentDoc: null,
+      rootCommand: cmd,
+      subcommand: ''
+    };
+  }
+
+  const parts = String(cmd || '').trim().split(/\s+/);
+  const rootCommand = parts[0] || cmd;
+  const subcommand = parts.slice(1).join(' ');
+  const parentDoc = docsConfig.commands?.[rootCommand] || null;
+  const doc = subcommand ? parentDoc?.subcommands?.[subcommand] || null : parentDoc;
+
+  return {
+    docsConfig,
+    doc,
+    parentDoc,
+    rootCommand,
+    subcommand
+  };
+}
+
+// ================================================================
+// saját kulcs ellenőrzése objektumon
+// ================================================================
+function hasOwnField(obj, key){
+  return !!obj && Object.prototype.hasOwnProperty.call(obj, key);
+}
+
+// ================================================================
+// megjelenítendő szöveg normalizálása
+// ================================================================
+function formatDisplayValue(value, fallback = '-'){
+  if (value === undefined || value === null) {
+    return fallback;
+  }
+
+  const text = String(value).trim();
+  return text ? text : fallback;
+}
+
+// ================================================================
+// hozzáférés feloldása parancs vagy alparancs szinten
+// ================================================================
+function getCommandAccess(doc, parentDoc, docsConfig){
+  if (hasOwnField(doc, 'access')) {
+    return doc.access;
+  }
+
+  if (hasOwnField(parentDoc, 'access')) {
+    return parentDoc.access;
+  }
+
+  return docsConfig.defaultAccess;
+}
+
+// ================================================================
+// lehetséges értékek cella formázása
+// ================================================================
+function formatCommandValuesCell(option){
+  const values = Array.isArray(option?.values)
+    ? option.values
+    : (option?.value !== undefined && option?.value !== null && option?.value !== '' ? [option.value] : []);
+
+  if (values.length > 1) {
+    return `<select>${values.map(v => `<option>${v}</option>`).join('')}</select>`;
+  }
+
+  if (values.length === 1) {
+    return values[0];
+  }
+
+  return '-';
+}
+
+// ================================================================
+// parancs ismertető renderelése az új command-docs.json szerint
+// ================================================================
 function renderCommand(cmd, groupKey, subKey){
   const imageName = cmd.replace(/^\//, '').replace(/\s+/g, '-');
-  const docsConfig = state.commandDocs || DEFAULT_COMMAND_DOCS;
-  const doc = docsConfig.commands?.[cmd];
-  const commandOptions = doc?.options || docsConfig.defaultOptions || [];
-  const options = commandOptions.map(o=>{
-    const values = o.values || o.value || [];
-    const valueCell = values.length > 1 ? `<select>${values.map(v=>`<option>${v}</option>`).join('')}</select>` : (values[0] || '-');
-    return `<tr><td>${o.name || '-'}</td><td>${o.type || '-'}</td><td>${o.required ? 'Yes' : 'No'}</td><td>${valueCell}</td></tr>`;
-  }).join('');
+  const { docsConfig, doc, parentDoc } = getResolvedCommandDoc(cmd);
+
+  const commandOptions = Array.isArray(doc?.options) && doc.options.length
+    ? doc.options
+    : Array.isArray(parentDoc?.options) && parentDoc.options.length
+      ? parentDoc.options
+      : (docsConfig.defaultOptions || []);
+
+  const options = commandOptions.map(option => `
+    <tr>
+      <td>${formatDisplayValue(option.name)}</td>
+      <td>${formatDisplayValue(option.type)}</td>
+      <td>${option.required ? 'Yes' : 'No'}</td>
+      <td>${formatDisplayValue(option.source)}</td>
+      <td>${formatDisplayValue(option.format)}</td>
+      <td>${formatCommandValuesCell(option)}</td>
+    </tr>
+  `).join('');
+
   const fallbackDescription = `${cmd} ${docsConfig.defaultDescription || 'parancs részletes leírása.'}`;
-  const description = doc?.description || fallbackDescription;
-  const access = doc?.access || docsConfig.defaultAccess || 'Bárki';
+  const description = doc?.description || parentDoc?.description || fallbackDescription;
+  const access = getCommandAccess(doc, parentDoc, docsConfig);
+  const tableBody = options || `<tr><td colspan="6">-</td></tr>`;
+
   setTopBreadcrumb(['Dashboard', t('sidebar.commands'), t(subKey), cmd]);
   document.getElementById('content').innerHTML = `<div class="card">
     <h1>${cmd}</h1>
     <p>${description}</p>
-    <p><strong>${t('content.access')}:</strong> ${access}</p>
-    <div class="table-wrap"><table><thead><tr><th>Option</th><th>Type</th><th>Required</th><th>Values</th></tr></thead><tbody>${options}</tbody></table></div>
+    <p><strong>${t('content.access')}:</strong> ${formatDisplayValue(access)}</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>${t('content.optionName')}</th>
+            <th>${t('content.optionType')}</th>
+            <th>${t('content.optionRequired')}</th>
+            <th>${t('content.optionSource')}</th>
+            <th>${t('content.optionFormat')}</th>
+            <th>${t('content.optionValue')}</th>
+          </tr>
+        </thead>
+        <tbody>${tableBody}</tbody>
+      </table>
+    </div>
     <div class="figure"><strong>${t('content.demoImage')}:</strong><img src="images/${imageName}.png" alt="${cmd} demo" onerror="this.alt='Kép nem található'; this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<p>Kép nem található: images/${imageName}.png</p>')"/></div>
   </div>`;
 }

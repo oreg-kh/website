@@ -7,7 +7,11 @@
       "type": "string",
       "required": false,
       "source": "choice",
-      "values": ["player", "tribe", "ally"],
+      "values": [
+        "player",
+        "tribe",
+        "ally"
+      ],
       "format": ""
     },
     {
@@ -15,7 +19,9 @@
       "type": "number",
       "required": false,
       "source": "choice",
-      "values": ["101"],
+      "values": [
+        "101"
+      ],
       "format": ""
     }
   ],
@@ -28,11 +34,17 @@
           "type": "string",
           "required": true,
           "source": "choice",
-          "values": ["troops", "buildings", "flags", "other"],
+          "values": [
+            "troops",
+            "buildings",
+            "flags",
+            "other"
+          ],
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/calculate-backtime": {
       "description": "Add meg a koordinátákat, pontos dátumot és a támadó sereg sebességét.",
@@ -70,7 +82,8 @@
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/calculate-coin-limit": {
       "description": "Kiszámítja a nemesek számának korlátját a megadott számú érme alapján.",
@@ -84,7 +97,8 @@
           "format": "1"
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/calculate-noblemen-limit": {
       "description": "Kiszámítja, hogy hány érmére van szükséged a megadott nemeslimit eléréséhez.",
@@ -98,7 +112,8 @@
           "format": "min: 1"
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/check-tribe-orientation": {
       "description": "Grafikont készít egy kiválasztott klán beállítottságáról.",
@@ -112,7 +127,8 @@
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/compare-tribes-daily-stat": {
       "description": "Grafikont készít az első 20 klán napi statisztikáiból.",
@@ -126,12 +142,14 @@
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/compare-tribes-orientation": {
       "description": "Grafikont készít az első 20 klán beállítottságáról.",
       "options": [],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/create-conquer-notification": {
       "description": "Létrehoz egy foglalás értesítést.",
@@ -149,7 +167,9 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": ["true/false"],
+          "values": [
+            "true/false"
+          ],
           "format": ""
         },
         {
@@ -157,7 +177,9 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": ["true/false"],
+          "values": [
+            "true/false"
+          ],
           "format": ""
         },
         {
@@ -165,11 +187,14 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": ["true/false"],
+          "values": [
+            "true/false"
+          ],
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/create-defender-pack": {
       "description": "Védelmi csomag létrehozása",
@@ -195,7 +220,9 @@
           "type": "boolean",
           "required": true,
           "source": "input",
-          "values": ["true/false"],
+          "values": [
+            "true/false"
+          ],
           "format": ""
         },
         {
@@ -239,7 +266,8 @@
           "format": "min: 1; max: 35000"
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/create-mail-list": {
       "description": "Levelezőlistát készít a klán játékosaiból",
@@ -253,7 +281,8 @@
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/create-new-world-notification": {
       "description": "Ezen a csatornán értesítést küld az új világokról.",
@@ -263,11 +292,14 @@
           "type": "string",
           "required": true,
           "source": "choice",
-          "values": ["SERVERS domain lista"],
+          "values": [
+            "SERVERS domain lista"
+          ],
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/create-player-map": {
       "description": "Térképet készít a megadott paraméterek alapján.",
@@ -277,7 +309,9 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": ["true/false"],
+          "values": [
+            "true/false"
+          ],
           "format": ""
         },
         {
@@ -285,7 +319,9 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": ["true/false"],
+          "values": [
+            "true/false"
+          ],
           "format": ""
         },
         {
@@ -293,7 +329,10 @@
           "type": "string",
           "required": false,
           "source": "choice",
-          "values": ["normal", "political"],
+          "values": [
+            "normal",
+            "political"
+          ],
           "format": ""
         },
         {
@@ -377,7 +416,8 @@
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/create-poll": {
       "description": "Szavazás (Igen / Nem / Tartózkodom)",
@@ -399,7 +439,8 @@
           "format": "óra; alapértelmezett: 1"
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/create-resource-pack": {
       "description": "Nyersanyag csomag létrehozása",
@@ -425,7 +466,17 @@
           "type": "string",
           "required": false,
           "source": "choice",
-          "values": ["-24%", "-23%", "-22%", "-20%", "-18%", "-16%", "-14%", "-12%", "-10%"],
+          "values": [
+            "-24%",
+            "-23%",
+            "-22%",
+            "-20%",
+            "-18%",
+            "-16%",
+            "-14%",
+            "-12%",
+            "-10%"
+          ],
           "format": ""
         },
         {
@@ -433,7 +484,9 @@
           "type": "string",
           "required": false,
           "source": "choice",
-          "values": ["-10%"],
+          "values": [
+            "-10%"
+          ],
           "format": ""
         },
         {
@@ -445,12 +498,14 @@
           "format": "pl.: 35%"
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/create-ticket-panel": {
       "description": "Létrehoz egy ticket panelt ebben a csatornában.",
       "options": [],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/create-tribe-daily-stat": {
       "description": "Grafikont készít egy klán napi statisztikáiból.",
@@ -472,7 +527,8 @@
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/create-tribe-map": {
       "description": "Térképet készít a megadott paraméterek alapján.",
@@ -482,7 +538,9 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": ["true/false"],
+          "values": [
+            "true/false"
+          ],
           "format": ""
         },
         {
@@ -490,7 +548,9 @@
           "type": "boolean",
           "required": false,
           "source": "input",
-          "values": ["true/false"],
+          "values": [
+            "true/false"
+          ],
           "format": ""
         },
         {
@@ -498,7 +558,10 @@
           "type": "string",
           "required": false,
           "source": "choice",
-          "values": ["normal", "political"],
+          "values": [
+            "normal",
+            "political"
+          ],
           "format": ""
         },
         {
@@ -582,7 +645,8 @@
           "format": "több klán esetén elválasztó: &"
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/create-war-stat": {
       "description": "Foglalási statisztikát készít a megadott paraméterek alapján.",
@@ -636,12 +700,14 @@
           "format": "több játékos esetén elválasztó: &"
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/create-welcome-channel": {
       "description": "Üdvözlő csatorna beállítása az új tagok számára.",
       "options": [],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/fake-coordinate-filter": {
       "description": "Kiszűri a klánodhoz tartozó koordinátákat.",
@@ -663,7 +729,8 @@
           "format": ".txt"
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/logging": {
       "description": "Naplóesemények beállítása",
@@ -673,7 +740,9 @@
           "type": "string",
           "required": true,
           "source": "choice",
-          "values": ["EVENT_OPTIONS kulcsok"],
+          "values": [
+            "EVENT_OPTIONS kulcsok"
+          ],
           "format": ""
         },
         {
@@ -689,11 +758,14 @@
           "type": "boolean",
           "required": true,
           "source": "input",
-          "values": ["true/false"],
+          "values": [
+            "true/false"
+          ],
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/register-world-channel": {
       "description": "Válassz egy világot a csatornához.",
@@ -703,7 +775,9 @@
           "type": "string",
           "required": true,
           "source": "choice",
-          "values": ["SERVERS domain lista"],
+          "values": [
+            "SERVERS domain lista"
+          ],
           "format": ""
         },
         {
@@ -715,7 +789,8 @@
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/register-world-server": {
       "description": "Válassz egy alapértelmezett világot az egész szerverhez.",
@@ -725,7 +800,9 @@
           "type": "string",
           "required": true,
           "source": "choice",
-          "values": ["SERVERS domain lista"],
+          "values": [
+            "SERVERS domain lista"
+          ],
           "format": ""
         },
         {
@@ -737,7 +814,8 @@
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/set-bot-role": {
       "description": "Beállítja, melyik szerepkör használhatja a bot adminparancsait.",
@@ -751,7 +829,8 @@
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/settings": {
       "description": "Beállítások listázása vagy törlése.",
@@ -776,7 +855,8 @@
               ],
               "format": ""
             }
-          ]
+          ],
+          "access": ""
         },
         "delete-default": {
           "description": "Szerverhez beállított domain és világ törlése.",
@@ -786,10 +866,13 @@
               "type": "boolean",
               "required": true,
               "source": "input",
-              "values": ["true/false"],
+              "values": [
+                "true/false"
+              ],
               "format": ""
             }
-          ]
+          ],
+          "access": ""
         },
         "delete-channel": {
           "description": "Csatorna szintű beállítások törlése.",
@@ -814,7 +897,9 @@
               "type": "boolean",
               "required": true,
               "source": "input",
-              "values": ["true/false"],
+              "values": [
+                "true/false"
+              ],
               "format": ""
             },
             {
@@ -825,9 +910,11 @@
               "values": [],
               "format": "GuildText | GuildAnnouncement | GuildVoice | GuildForum | GuildStageVoice"
             }
-          ]
+          ],
+          "access": ""
         }
-      }
+      },
+      "access": ""
     },
     "/toggle-coords-info": {
       "description": "Koordinához kapcsolódó információk mutatása.",
@@ -837,11 +924,14 @@
           "type": "boolean",
           "required": true,
           "source": "input",
-          "values": ["true/false"],
+          "values": [
+            "true/false"
+          ],
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     },
     "/toggle-public-report": {
       "description": "Képernyőkép készítése a jelentésről az url használatával.",
@@ -851,11 +941,14 @@
           "type": "boolean",
           "required": true,
           "source": "input",
-          "values": ["true/false"],
+          "values": [
+            "true/false"
+          ],
           "format": ""
         }
       ],
-      "subcommands": {}
+      "subcommands": {},
+      "access": ""
     }
   }
 }

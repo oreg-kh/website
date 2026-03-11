@@ -177,7 +177,7 @@
             "/create-conquer-notification",
             "/create-new-world-notification",
             "/toggle-coords-info",
-            "/show-report"
+            "/toggle-public-report"
           ]
         },
         {
