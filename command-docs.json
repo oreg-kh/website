@@ -44,7 +44,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/calculate-backtime": {
       "description": "Add meg a koordinátákat, pontos dátumot és a támadó sereg sebességét.",
@@ -83,7 +83,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep, Minden felhasználó"
     },
     "/calculate-coin-limit": {
       "description": "Kiszámítja a nemesek számának korlátját a megadott számú érme alapján.",
@@ -98,7 +98,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep, Minden felhasználó"
     },
     "/calculate-noblemen-limit": {
       "description": "Kiszámítja, hogy hány érmére van szükséged a megadott nemeslimit eléréséhez.",
@@ -113,7 +113,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep, Minden felhasználó"
     },
     "/check-tribe-orientation": {
       "description": "Grafikont készít egy kiválasztott klán beállítottságáról.",
@@ -128,7 +128,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep, Minden felhasználó"
     },
     "/compare-tribes-daily-stat": {
       "description": "Grafikont készít az első 20 klán napi statisztikáiból.",
@@ -143,13 +143,13 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep, Minden felhasználó"
     },
     "/compare-tribes-orientation": {
       "description": "Grafikont készít az első 20 klán beállítottságáról.",
       "options": [],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep, Minden felhasználó"
     },
     "/create-conquer-notification": {
       "description": "Létrehoz egy foglalás értesítést.",
@@ -194,7 +194,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/create-defender-pack": {
       "description": "Védelmi csomag létrehozása",
@@ -267,7 +267,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/create-mail-list": {
       "description": "Levelezőlistát készít a klán játékosaiból",
@@ -282,7 +282,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep, Minden felhasználó"
     },
     "/create-new-world-notification": {
       "description": "Ezen a csatornán értesítést küld az új világokról.",
@@ -299,7 +299,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/create-player-map": {
       "description": "Térképet készít a megadott paraméterek alapján.",
@@ -417,7 +417,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep, Minden felhasználó"
     },
     "/create-poll": {
       "description": "Szavazás (Igen / Nem / Tartózkodom)",
@@ -440,7 +440,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/create-resource-pack": {
       "description": "Nyersanyag csomag létrehozása",
@@ -499,13 +499,13 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/create-ticket-panel": {
       "description": "Létrehoz egy ticket panelt ebben a csatornában.",
       "options": [],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/create-tribe-daily-stat": {
       "description": "Grafikont készít egy klán napi statisztikáiból.",
@@ -528,7 +528,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep, Minden felhasználó"
     },
     "/create-tribe-map": {
       "description": "Térképet készít a megadott paraméterek alapján.",
@@ -646,7 +646,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep, Minden felhasználó"
     },
     "/create-war-stat": {
       "description": "Foglalási statisztikát készít a megadott paraméterek alapján.",
@@ -701,13 +701,13 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep, Minden felhasználó"
     },
     "/create-welcome-channel": {
       "description": "Üdvözlő csatorna beállítása az új tagok számára.",
       "options": [],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/fake-coordinate-filter": {
       "description": "Kiszűri a klánodhoz tartozó koordinátákat.",
@@ -730,7 +730,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep, Minden felhasználó"
     },
     "/logging": {
       "description": "Naplóesemények beállítása",
@@ -765,7 +765,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/register-world-channel": {
       "description": "Válassz egy világot a csatornához.",
@@ -790,7 +790,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/register-world-server": {
       "description": "Válassz egy alapértelmezett világot az egész szerverhez.",
@@ -815,7 +815,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/set-bot-role": {
       "description": "Beállítja, melyik szerepkör használhatja a bot adminparancsait.",
@@ -830,7 +830,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/settings": {
       "description": "Beállítások listázása vagy törlése.",
@@ -856,7 +856,7 @@
               "format": ""
             }
           ],
-          "access": ""
+          "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
         },
         "delete-default": {
           "description": "Szerverhez beállított domain és világ törlése.",
@@ -872,7 +872,7 @@
               "format": ""
             }
           ],
-          "access": ""
+          "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
         },
         "delete-channel": {
           "description": "Csatorna szintű beállítások törlése.",
@@ -911,10 +911,10 @@
               "format": "GuildText | GuildAnnouncement | GuildVoice | GuildForum | GuildStageVoice"
             }
           ],
-          "access": ""
+          "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
         }
       },
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/toggle-coords-info": {
       "description": "Koordinához kapcsolódó információk mutatása.",
@@ -931,7 +931,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/toggle-public-report": {
       "description": "Képernyőkép készítése a jelentésről az url használatával.",
@@ -948,7 +948,7 @@
         }
       ],
       "subcommands": {},
-      "access": ""
+      "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     }
   }
 }
