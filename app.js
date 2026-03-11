@@ -151,7 +151,6 @@ const DEFAULT_I18N = {
   "tr": { "topbar.discordAdd": "Discord'a ekle", "topbar.support": "Destek", "topbar.language": "Dil", "topbar.monthlyGoal": "Aylık hedef" }
 };
 
-
 const DEFAULT_COMMAND_DOCS = {
   defaultAccess: '',
   defaultDescription: 'A bot automatizált folyamatot indít, validációkat végez, majd naplózza az eredményt.',
@@ -172,6 +171,7 @@ const DEFAULT_COMMAND_DOCS = {
 };
 
 const state = { lang: 'hu', theme: 'light', menu: null, i18n: null, commandDocs: null, active: null, activeGroupId: null, discordWidgetLoaded: false, discordWidgetTheme: null, discordWidgetOutsideBound: false };
+
 const icons = {
   intro: `<svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 5v14M4 10h16"/></svg>`,
   slash: `<svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M7 10.5 10 12 7 13.5"/><path d="M12 14h5"/></svg>`,
@@ -180,6 +180,7 @@ const icons = {
   discord: `<svg viewBox="0 0 18 14" fill="currentColor" stroke="none"><path d="M15.248 1.089A15.431 15.431 0 0011.534 0a9.533 9.533 0 00-.476.921 14.505 14.505 0 00-4.12 0A9.582 9.582 0 006.461 0a15.54 15.54 0 00-3.717 1.091C.395 4.405-.242 7.636.076 10.821A15.269 15.269 0 004.631 13c.369-.473.695-.974.975-1.499a9.896 9.896 0 01-1.536-.699c.13-.089.255-.18.377-.27 1.424.639 2.979.97 4.553.97 1.574 0 3.129-.331 4.553-.97.123.096.25.188.377.27a9.94 9.94 0 01-1.54.7c.28.525.607 1.026.976 1.498a15.2 15.2 0 004.558-2.178c.373-3.693-.639-6.895-2.676-9.733zM6.01 8.862c-.888 0-1.621-.767-1.621-1.712 0-.944.708-1.718 1.618-1.718.91 0 1.638.774 1.623 1.718-.016.945-.715 1.712-1.62 1.712zm5.98 0c-.889 0-1.62-.767-1.62-1.712 0-.944.708-1.718 1.62-1.718.912 0 1.634.774 1.618 1.718-.015.945-.713 1.712-1.618 1.712z"/></svg>`,
   support: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="currentColor" stroke="none"><path d="M267.7 576.9C267.7 576.9 267.7 576.9 267.7 576.9L229.9 603.6C222.6 608.8 213 609.4 205 605.3C197 601.2 192 593 192 584L192 512L160 512C107 512 64 469 64 416L64 192C64 139 107 96 160 96L480 96C533 96 576 139 576 192L576 416C576 469 533 512 480 512L359.6 512L267.7 576.9zM332 472.8C340.1 467.1 349.8 464 359.7 464L480 464C506.5 464 528 442.5 528 416L528 192C528 165.5 506.5 144 480 144L160 144C133.5 144 112 165.5 112 192L112 416C112 442.5 133.5 464 160 464L216 464C226.4 464 235.3 470.6 238.6 479.9C239.5 482.4 240 485.1 240 488L240 537.7C272.7 514.6 303.3 493 331.9 472.8z"/></svg>`
 };
+
 const t = (k)=> state.i18n[state.lang]?.[k] || state.i18n.hu?.[k] || k;
 const el = (tag, cls, html='') => { const e=document.createElement(tag); if(cls) e.className=cls; e.innerHTML=html; return e; };
 const chevronIcon = () => '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 6 8l4-3.5"/></svg>';
@@ -187,6 +188,9 @@ const sidebarToggleIcon = (collapsed) => collapsed
   ? '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M8 2.5 4 6l4 3.5"/></svg>'
   : '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2.5 8 6l-4 3.5"/></svg>';
 
+// ================================================================
+// json fájlok betöltése fallback adatokkal
+// ================================================================
 async function fetchJsonWithFallback(path, fallback) {
   try {
     const res = await fetch(path);
@@ -197,36 +201,56 @@ async function fetchJsonWithFallback(path, fallback) {
   }
 }
 
+// ================================================================
+// alkalmazás inicializálása
+// ================================================================
 async function init() {
   const [menu, i18n, commandDocs] = await Promise.all([
     fetchJsonWithFallback('menu.json', DEFAULT_MENU),
     fetchJsonWithFallback('translations.json', DEFAULT_I18N),
     fetchJsonWithFallback('command-docs.json', DEFAULT_COMMAND_DOCS)
   ]);
-  state.menu = menu; state.i18n = i18n; state.commandDocs = commandDocs;
+
+  state.menu = menu;
+  state.i18n = i18n;
+  state.commandDocs = commandDocs;
   state.lang = localStorage.getItem('lang') || 'hu';
+
   const storedTheme = localStorage.getItem('theme');
   state.theme = (storedTheme === 'dark' || storedTheme === 'light') ? storedTheme : 'light';
+
   applyTheme();
   state.activeGroupId = state.menu.nav?.[0]?.id || null;
+
   buildTopbar();
   buildIconRail();
   buildSidebar();
   initSidebarToggle();
   await loadRevenue();
-  renderPage({ title: t('pages.firstSteps.title'), text: t('pages.firstSteps.text')}, ['Dashboard', t('sidebar.introduction'), t('intro.firstSteps')]);
+
+  renderPage(
+    { title: t('pages.firstSteps.title'), text: t('pages.firstSteps.text') },
+    ['Dashboard', t('sidebar.introduction'), t('intro.firstSteps')]
+  );
 }
 
+// ================================================================
+// téma alkalmazása
+// ================================================================
 function applyTheme() {
   const root = document.documentElement;
   root.setAttribute('data-theme', state.theme === 'dark' ? 'dark' : 'light');
 }
 
+// ================================================================
+// oldalsáv nyitás / zárás
+// ================================================================
 function initSidebarToggle(){
   const shell = document.querySelector('.sidebar-shell');
   const appShell = document.querySelector('.app-shell');
   const btn = document.getElementById('sidebarToggle');
   const collapsedBtn = document.getElementById('sidebarToggleCollapsed');
+
   if(!shell || !btn || !collapsedBtn || !appShell) return;
 
   const applyState = (hidden) => {
@@ -244,29 +268,53 @@ function initSidebarToggle(){
   collapsedBtn.onclick = () => applyState(false);
 }
 
+// ================================================================
+// felső sáv felépítése
+// ================================================================
 function buildTopbar() {
   document.getElementById('discordIcon').innerHTML = icons.discord;
   document.getElementById('supportIcon').innerHTML = `<img class="support-avatar-icon" src="images/brian-the-barbarian.png" alt="Brian the Barbarian"/>`;
   document.getElementById('discordAddBtn').href = state.menu.settings.discord.addBotUrl;
+
   initDiscordSupportWidget();
-  document.querySelectorAll('[data-i18n]').forEach(n=> n.textContent = t(n.dataset.i18n));
+
+  document.querySelectorAll('[data-i18n]').forEach(n => n.textContent = t(n.dataset.i18n));
   document.getElementById('progressLabel').textContent = t('topbar.monthlyGoal');
+
   const picker = document.getElementById('languagePicker');
   const current = document.getElementById('languageCurrent');
   const menu = document.getElementById('languageMenu');
-  const activeLang = state.menu.languages.find(l=>l.code===state.lang) || state.menu.languages[0];
+  const activeLang = state.menu.languages.find(l => l.code === state.lang) || state.menu.languages[0];
+
   current.innerHTML = `<span class="btn-icon">${svgFlag(activeLang.country)}</span><span>${activeLang.name}</span><span class="lang-arrow">${chevronIcon()}</span>`;
   menu.innerHTML = '';
-  state.menu.languages.forEach(l=> {
-    const b = el('button','language-item',`<span class="btn-icon">${svgFlag(l.country)}</span> ${l.name}`);
-    b.onclick = ()=> { state.lang=l.code; localStorage.setItem('lang', state.lang); picker.classList.remove('open'); buildTopbar(); buildIconRail(); buildSidebar(); };
+
+  state.menu.languages.forEach(l => {
+    const b = el('button', 'language-item', `<span class="btn-icon">${svgFlag(l.country)}</span> ${l.name}`);
+    b.onclick = () => {
+      state.lang = l.code;
+      localStorage.setItem('lang', state.lang);
+      picker.classList.remove('open');
+      buildTopbar();
+      buildIconRail();
+      buildSidebar();
+    };
     menu.appendChild(b);
   });
-  current.onclick = (e)=> { e.stopPropagation(); picker.classList.toggle('open'); };
-  document.onclick = (e) => { if (!picker.contains(e.target)) picker.classList.remove('open'); };
+
+  current.onclick = (e) => {
+    e.stopPropagation();
+    picker.classList.toggle('open');
+  };
+
+  document.onclick = (e) => {
+    if (!picker.contains(e.target)) picker.classList.remove('open');
+  };
 }
 
-
+// ================================================================
+// discord támogatói widget inicializálása
+// ================================================================
 async function initDiscordSupportWidget(){
   const guildId = '891626562871525398';
   const btn = document.getElementById('supportBtn');
@@ -277,28 +325,34 @@ async function initDiscordSupportWidget(){
   const status = document.getElementById('discordWidgetStatus');
   const frame = document.getElementById('discordWidgetFrame');
   const loading = document.getElementById('discordWidgetLoading');
+
   if(!btn || !supportName || !supportStatus || !panel || !name || !status || !frame || !loading) return;
 
-  btn.onclick = async (e)=>{
+  btn.onclick = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+
     const open = panel.classList.toggle('open');
     btn.setAttribute('aria-expanded', String(open));
+
     if(open){
       const theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+
       if(!state.discordWidgetLoaded || state.discordWidgetTheme !== theme){
         frame.src = `https://discord.com/widget?id=${guildId}&theme=${theme}`;
         state.discordWidgetLoaded = true;
         state.discordWidgetTheme = theme;
       }
+
       frame.style.display = 'block';
       loading.style.display = 'none';
     }
   };
 
-  panel.onclick = (e)=> e.stopPropagation();
+  panel.onclick = (e) => e.stopPropagation();
+
   if(!state.discordWidgetOutsideBound){
-    document.addEventListener('click', (e)=>{
+    document.addEventListener('click', (e) => {
       if(!panel.classList.contains('open')) return;
       if(btn.contains(e.target) || panel.contains(e.target)) return;
       panel.classList.remove('open');
@@ -310,9 +364,11 @@ async function initDiscordSupportWidget(){
   try{
     const res = await fetch(`https://discord.com/api/guilds/${guildId}/widget.json`);
     if(!res.ok) throw new Error('widget');
+
     const data = await res.json();
     const serverName = data.name || 'Discord szerver';
     const online = data.presence_count ?? 0;
+
     supportName.textContent = serverName;
     supportStatus.textContent = `${online} online`;
     name.textContent = serverName;
@@ -325,96 +381,159 @@ async function initDiscordSupportWidget(){
   }
 }
 
-
+// ================================================================
+// zászló ikon html generálása
+// ================================================================
 function svgFlag(country){
   const code = String(country || '').toLowerCase();
   return `<img class="flag-img" src="https://flagcdn.com/${code}.svg" alt="${country} flag" loading="lazy"/>`;
 }
 
-
+// ================================================================
+// morzsa navigáció beállítása
+// ================================================================
 function setTopBreadcrumb(parts){
-  const n=document.getElementById('topBreadcrumb');
+  const n = document.getElementById('topBreadcrumb');
   if(n) n.textContent = '';
 }
 
+// ================================================================
+// bal oldali ikon sáv felépítése
+// ================================================================
 function buildIconRail(){
   const rail = document.getElementById('iconRail');
-  rail.innerHTML='';
-  state.menu.nav.forEach((group)=>{
-    const b = el('button','rail-item',icons[group.icon] || icons.intro);
-    if(group.id === state.activeGroupId) b.classList.add('active');
+  rail.innerHTML = '';
+
+  state.menu.nav.forEach((group) => {
+    const b = el('button', 'rail-item', icons[group.icon] || icons.intro);
+
+    if(group.id === state.activeGroupId) {
+      b.classList.add('active');
+    }
+
     b.title = t(group.labelKey);
-    b.onclick = ()=>{
+    b.onclick = () => {
       state.activeGroupId = group.id;
       buildIconRail();
       buildSidebar();
     };
+
     rail.appendChild(b);
   });
 }
 
+// ================================================================
+// oldalsáv felépítése
+// ================================================================
 function buildSidebar() {
-  const sidebar = document.getElementById('sidebar'); sidebar.innerHTML='';
+  const sidebar = document.getElementById('sidebar');
+  sidebar.innerHTML = '';
+
   const group = state.menu.nav.find(g => g.id === state.activeGroupId) || state.menu.nav[0];
   if (!group) return;
+
   group.children.forEach(child => sidebar.appendChild(buildChild(child, group)));
 }
 
+// ================================================================
+// oldalsáv elem felépítése
+// ================================================================
 function buildChild(child, group){
-  if(child.type==='commandGroup'){
+  if(child.type === 'commandGroup'){
     const block = el('div');
-    const main = el('button','sub-item sub-toggle',`<span>${t(child.labelKey)}</span><span class="toggle-icon">${chevronIcon()}</span>`);
-    const list = el('div','command-list'); list.style.display='none';
-    main.onclick=()=> {
-      const opening = list.style.display === 'none';
-      list.style.display = opening ? 'block' : 'none';
-      main.classList.toggle('open', opening);
-    };
-    child.commands.forEach(cmd=>{ const b=el('button','cmd-option',cmd); b.onclick=()=>renderCommand(cmd, group.labelKey, child.labelKey); list.appendChild(b); });
-    block.append(main,list); return block;
-  }
+    const main = el('button', 'sub-item sub-toggle', `<span>${t(child.labelKey)}</span><span class="toggle-icon">${chevronIcon()}</span>`);
+    const list = el('div', 'command-list');
 
-  if(child.type==='appearance'){
-    const block = el('div');
-    const main = el('button','sub-item sub-toggle',`<span>${t(child.labelKey)}</span><span class="toggle-icon">${chevronIcon()}</span>`);
-    const list = el('div','command-list'); list.style.display='none';
-    main.onclick=()=> {
+    list.style.display = 'none';
+
+    main.onclick = () => {
       const opening = list.style.display === 'none';
       list.style.display = opening ? 'block' : 'none';
       main.classList.toggle('open', opening);
     };
-    ['dark','light'].forEach(mode=>{
-      const b = el('button','cmd-option',t(`settings.${mode}`));
-      b.onclick = ()=>{ state.theme=mode; localStorage.setItem('theme', state.theme); applyTheme(); };
+
+    child.commands.forEach(cmd => {
+      const b = el('button', 'cmd-option', cmd);
+      b.onclick = () => renderCommand(cmd, group.labelKey, child.labelKey);
       list.appendChild(b);
     });
-    block.append(main,list); return block;
+
+    block.append(main, list);
+    return block;
   }
 
-  if(child.type==='language'){
+  if(child.type === 'appearance'){
     const block = el('div');
-    const main = el('button','sub-item sub-toggle',`<span>${t(child.labelKey)}</span><span class="toggle-icon">${chevronIcon()}</span>`);
-    const list = el('div','command-list'); list.style.display='none';
-    main.onclick=()=> {
+    const main = el('button', 'sub-item sub-toggle', `<span>${t(child.labelKey)}</span><span class="toggle-icon">${chevronIcon()}</span>`);
+    const list = el('div', 'command-list');
+
+    list.style.display = 'none';
+
+    main.onclick = () => {
       const opening = list.style.display === 'none';
       list.style.display = opening ? 'block' : 'none';
       main.classList.toggle('open', opening);
     };
-    state.menu.languages.forEach(l=>{
-      const b = el('button','cmd-option',`<span class="btn-icon">${svgFlag(l.country)}</span> ${l.name}`);
-      b.onclick = ()=> { state.lang=l.code; localStorage.setItem('lang', state.lang); buildTopbar(); buildIconRail(); buildSidebar(); };
+
+    ['dark', 'light'].forEach(mode => {
+      const b = el('button', 'cmd-option', t(`settings.${mode}`));
+      b.onclick = () => {
+        state.theme = mode;
+        localStorage.setItem('theme', state.theme);
+        applyTheme();
+      };
       list.appendChild(b);
     });
-    block.append(main,list); return block;
+
+    block.append(main, list);
+    return block;
   }
 
-  const b = el('button','sub-item',t(child.labelKey));
-  b.onclick=()=>{
-    if(child.type==='page') renderPage({title:t(`${child.contentKey}.title`), text:t(`${child.contentKey}.text`)}, [t(group.labelKey), t(child.labelKey)]);
+  if(child.type === 'language'){
+    const block = el('div');
+    const main = el('button', 'sub-item sub-toggle', `<span>${t(child.labelKey)}</span><span class="toggle-icon">${chevronIcon()}</span>`);
+    const list = el('div', 'command-list');
+
+    list.style.display = 'none';
+
+    main.onclick = () => {
+      const opening = list.style.display === 'none';
+      list.style.display = opening ? 'block' : 'none';
+      main.classList.toggle('open', opening);
+    };
+
+    state.menu.languages.forEach(l => {
+      const b = el('button', 'cmd-option', `<span class="btn-icon">${svgFlag(l.country)}</span> ${l.name}`);
+      b.onclick = () => {
+        state.lang = l.code;
+        localStorage.setItem('lang', state.lang);
+        buildTopbar();
+        buildIconRail();
+        buildSidebar();
+      };
+      list.appendChild(b);
+    });
+
+    block.append(main, list);
+    return block;
+  }
+
+  const b = el('button', 'sub-item', t(child.labelKey));
+  b.onclick = () => {
+    if(child.type === 'page') {
+      renderPage(
+        { title: t(`${child.contentKey}.title`), text: t(`${child.contentKey}.text`) },
+        [t(group.labelKey), t(child.labelKey)]
+      );
+    }
   };
+
   return b;
 }
 
+// ================================================================
+// egyszerű tartalmi oldal renderelése
+// ================================================================
 function renderPage(page, crumb){
   setTopBreadcrumb(crumb);
   document.getElementById('content').innerHTML = `<div class="card"><h1>${page.title}</h1><p>${page.text}</p></div>`;
@@ -487,6 +606,24 @@ function getCommandAccess(doc, parentDoc, docsConfig){
 }
 
 // ================================================================
+// parancs opciók feloldása
+// ha az options mező létezik, akkor azt használjuk akkor is,
+// ha üres tömb; alapértelmezett opció csak akkor kell,
+// ha az options mező nincs megadva
+// ================================================================
+function getCommandOptions(doc, parentDoc, docsConfig){
+  if (hasOwnField(doc, 'options') && Array.isArray(doc.options)) {
+    return doc.options;
+  }
+
+  if (hasOwnField(parentDoc, 'options') && Array.isArray(parentDoc.options)) {
+    return parentDoc.options;
+  }
+
+  return Array.isArray(docsConfig.defaultOptions) ? docsConfig.defaultOptions : [];
+}
+
+// ================================================================
 // lehetséges értékek cella formázása
 // ================================================================
 function formatCommandValuesCell(option){
@@ -512,11 +649,7 @@ function renderCommand(cmd, groupKey, subKey){
   const imageName = cmd.replace(/^\//, '').replace(/\s+/g, '-');
   const { docsConfig, doc, parentDoc } = getResolvedCommandDoc(cmd);
 
-  const commandOptions = Array.isArray(doc?.options) && doc.options.length
-    ? doc.options
-    : Array.isArray(parentDoc?.options) && parentDoc.options.length
-      ? parentDoc.options
-      : (docsConfig.defaultOptions || []);
+  const commandOptions = getCommandOptions(doc, parentDoc, docsConfig);
 
   const options = commandOptions.map(option => `
     <tr>
@@ -535,6 +668,7 @@ function renderCommand(cmd, groupKey, subKey){
   const tableBody = options || `<tr><td colspan="6">-</td></tr>`;
 
   setTopBreadcrumb(['Dashboard', t('sidebar.commands'), t(subKey), cmd]);
+
   document.getElementById('content').innerHTML = `<div class="card">
     <h1>${cmd}</h1>
     <p>${description}</p>
@@ -558,31 +692,63 @@ function renderCommand(cmd, groupKey, subKey){
   </div>`;
 }
 
+// ================================================================
+// megjelenés oldal renderelése
+// ================================================================
 function renderAppearance(){
   setTopBreadcrumb(['Dashboard', t('sidebar.settings'), t('settings.appearance')]);
-  document.getElementById('content').innerHTML = `<div class="card"><h1>${t('settings.appearance')}</h1><div class="list-grid">${['dark','light'].map(k=>`<button class="sub-item" data-theme="${k}">${t('settings.'+k)}</button>`).join('')}</div></div>`;
-  document.querySelectorAll('[data-theme]').forEach(b=>b.onclick=()=>{ state.theme=b.dataset.theme; localStorage.setItem('theme', state.theme); applyTheme(); });
-}
-function renderLanguageSettings(){
-  setTopBreadcrumb(['Dashboard', t('sidebar.settings'), t('settings.language')]);
-  document.getElementById('content').innerHTML = `<div class="card"><h1>${t('settings.language')}</h1><div class="list-grid">${state.menu.languages.map(l=>`<button class="sub-item" data-lang="${l.code}"><span class="btn-icon">${svgFlag(l.country)}</span> ${l.name}</button>`).join('')}</div></div>`;
-  document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{ state.lang=b.dataset.lang; localStorage.setItem('lang', state.lang); buildTopbar(); buildIconRail(); buildSidebar(); renderLanguageSettings(); });
+  document.getElementById('content').innerHTML = `<div class="card"><h1>${t('settings.appearance')}</h1><div class="list-grid">${['dark','light'].map(k => `<button class="sub-item" data-theme="${k}">${t('settings.' + k)}</button>`).join('')}</div></div>`;
+  document.querySelectorAll('[data-theme]').forEach(b => b.onclick = () => {
+    state.theme = b.dataset.theme;
+    localStorage.setItem('theme', state.theme);
+    applyTheme();
+  });
 }
 
+// ================================================================
+// nyelv oldal renderelése
+// ================================================================
+function renderLanguageSettings(){
+  setTopBreadcrumb(['Dashboard', t('sidebar.settings'), t('settings.language')]);
+  document.getElementById('content').innerHTML = `<div class="card"><h1>${t('settings.language')}</h1><div class="list-grid">${state.menu.languages.map(l => `<button class="sub-item" data-lang="${l.code}"><span class="btn-icon">${svgFlag(l.country)}</span> ${l.name}</button>`).join('')}</div></div>`;
+  document.querySelectorAll('[data-lang]').forEach(b => b.onclick = () => {
+    state.lang = b.dataset.lang;
+    localStorage.setItem('lang', state.lang);
+    buildTopbar();
+    buildIconRail();
+    buildSidebar();
+    renderLanguageSettings();
+  });
+}
+
+// ================================================================
+// buy me a coffee cél progress betöltése
+// ================================================================
 async function loadRevenue(){
   const monthlyGoal = state.menu.settings.monthlyGoal;
   let amount = 0;
+
   try {
-    const r = await fetch(state.menu.settings.buyMeACoffee.apiUrl, { headers: { Authorization: `Bearer ${state.menu.settings.buyMeACoffee.token}` } });
+    const r = await fetch(state.menu.settings.buyMeACoffee.apiUrl, {
+      headers: {
+        Authorization: `Bearer ${state.menu.settings.buyMeACoffee.token}`
+      }
+    });
+
     const data = await r.json();
-    amount = (data?.data || []).reduce((sum, s)=> sum + Number(s.support_coffee_price || 0), 0);
+    amount = (data?.data || []).reduce((sum, s) => sum + Number(s.support_coffee_price || 0), 0);
   } catch {
     amount = Number(localStorage.getItem('fallbackRevenue') || 120);
   }
+
   const rollover = Number(localStorage.getItem('rollover') || 0);
   const effective = amount + rollover;
   const pct = Math.min(100, (effective / monthlyGoal) * 100);
-  if (effective > monthlyGoal) localStorage.setItem('rollover', String(effective - monthlyGoal));
+
+  if (effective > monthlyGoal) {
+    localStorage.setItem('rollover', String(effective - monthlyGoal));
+  }
+
   document.getElementById('progressAmount').textContent = `${effective.toFixed(0)} / ${monthlyGoal}`;
   document.getElementById('progressFill').style.width = `${pct}%`;
 }
