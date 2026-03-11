@@ -340,7 +340,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["játékos név"],
           "format": ""
         },
         {
@@ -348,7 +348,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["játékos név"],
           "format": ""
         },
         {
@@ -356,7 +356,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["játékos név"],
           "format": ""
         },
         {
@@ -364,7 +364,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["játékos név"],
           "format": ""
         },
         {
@@ -372,7 +372,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["játékos név"],
           "format": ""
         },
         {
@@ -380,7 +380,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["játékos név"],
           "format": ""
         },
         {
@@ -388,7 +388,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["játékos név"],
           "format": ""
         },
         {
@@ -396,7 +396,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["játékos név"],
           "format": ""
         },
         {
@@ -404,7 +404,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["játékos név"],
           "format": ""
         },
         {
@@ -412,7 +412,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["játékos név"],
           "format": ""
         }
       ],
@@ -569,7 +569,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": "több klán esetén elválasztó: &"
         },
         {
@@ -577,7 +577,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": "több klán esetén elválasztó: &"
         },
         {
@@ -585,7 +585,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": "több klán esetén elválasztó: &"
         },
         {
@@ -593,7 +593,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": "több klán esetén elválasztó: &"
         },
         {
@@ -601,7 +601,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": "több klán esetén elválasztó: &"
         },
         {
@@ -609,7 +609,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": "több klán esetén elválasztó: &"
         },
         {
@@ -617,7 +617,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": "több klán esetén elválasztó: &"
         },
         {
@@ -625,7 +625,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": "több klán esetén elválasztó: &"
         },
         {
@@ -633,7 +633,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": "több klán esetén elválasztó: &"
         },
         {
@@ -641,7 +641,7 @@
           "type": "string",
           "required": false,
           "source": "autocomplete",
-          "values": [],
+          "values": ["klán név"],
           "format": "több klán esetén elválasztó: &"
         }
       ],
@@ -741,7 +741,7 @@
           "required": true,
           "source": "choice",
           "values": [
-            "EVENT_OPTIONS kulcsok"
+            "guild", "members", "moderation", "users", "messages", "voice", "invites", "roles", "channels", "emojis"
           ],
           "format": ""
         },
@@ -776,7 +776,7 @@
           "required": true,
           "source": "choice",
           "values": [
-            "SERVERS domain lista"
+            "domain"
           ],
           "format": ""
         },
@@ -785,7 +785,9 @@
           "type": "string",
           "required": true,
           "source": "autocomplete",
-          "values": [],
+          "values": [
+            "világ"
+          ],
           "format": ""
         }
       ],
@@ -801,7 +803,7 @@
           "required": true,
           "source": "choice",
           "values": [
-            "SERVERS domain lista"
+            "domain"
           ],
           "format": ""
         },
@@ -810,7 +812,9 @@
           "type": "string",
           "required": true,
           "source": "autocomplete",
-          "values": [],
+          "values": [
+            "világ"
+          ],
           "format": ""
         }
       ],
