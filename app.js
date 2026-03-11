@@ -936,7 +936,7 @@ function getBudapestDateString() {
 // látogatói statisztika betöltése google apps scriptből
 // ================================================================
 async function loadVisitorStats() {
-  const endpoint = 'IDE_JON_A_TE_APPS_SCRIPT_EXEC_URL?action=stats';
+  const endpoint = 'https://script.google.com/macros/s/AKfycbz0CpGtSId3S33ZAL6HmHYFntOB_Xl8faC8HWRwzhp1Hysq5EtIbUBn0BcvuLFD9qEk/exec?action=stats';
 
   try {
     const response = await fetch(endpoint, {
