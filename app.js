@@ -932,37 +932,37 @@ function getBudapestDateString() {
 // ================================================================
 // látogatói statisztika betöltése GoatCounterből
 // ================================================================
+// ================================================================
+// látogatói statisztika betöltése google apps scriptből
+// ================================================================
 async function loadVisitorStats() {
-  const site = 'https://brianthebarbarian.goatcounter.com';
-  const today = getBudapestDateString();
-
-  const totalUrl = `${site}/counter/TOTAL.json`;
-  const todayUrl = `${site}/counter/TOTAL.json?start=${encodeURIComponent(today)}&end=${encodeURIComponent(today)}`;
+  const endpoint = 'IDE_JON_A_TE_APPS_SCRIPT_EXEC_URL?action=stats';
 
   try {
-    const [todayRes, totalRes] = await Promise.all([
-      fetch(todayUrl, { cache: 'no-store' }),
-      fetch(totalUrl, { cache: 'no-store' })
-    ]);
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      cache: 'no-store'
+    });
 
-    if (!todayRes.ok || !totalRes.ok) {
-      throw new Error('Nem sikerült lekérni a GoatCounter adatokat.');
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
     }
 
-    const [todayData, totalData] = await Promise.all([
-      todayRes.json(),
-      totalRes.json()
-    ]);
+    const data = await response.json();
+
+    if (!data.ok) {
+      throw new Error(data.error || 'Ismeretlen statisztikai hiba');
+    }
 
     const todayEl = document.getElementById('visitorToday');
     const totalEl = document.getElementById('visitorTotal');
 
     if (todayEl) {
-      todayEl.textContent = todayData.count || '0';
+      todayEl.textContent = data.today || '0';
     }
 
     if (totalEl) {
-      totalEl.textContent = totalData.count || '0';
+      totalEl.textContent = data.total || '0';
     }
   } catch (error) {
     console.error('Látogatói statisztika hiba:', error);
