@@ -933,7 +933,7 @@ function getBudapestDateString() {
 // látogatói statisztika betöltése GoatCounterből
 // ================================================================
 async function loadVisitorStats() {
-  const site = 'https://SAJATKOD.goatcounter.com';
+  const site = 'https://brianthebarbarian.goatcounter.com';
   const today = getBudapestDateString();
 
   const totalUrl = `${site}/counter/TOTAL.json`;
