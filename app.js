@@ -244,13 +244,14 @@ async function init() {
   buildIconRail();
   buildSidebar();
   initSidebarToggle();
-  await loadRevenue();
-  await loadVisitorStats();
   
   renderPage(
     { title: t('pages.firstSteps.title'), text: t('pages.firstSteps.text') },
     ['Dashboard', t('sidebar.introduction'), t('intro.firstSteps')]
   );
+
+  await loadRevenue();
+  await loadVisitorStats();
 }
 
 // ================================================================
