@@ -480,3 +480,46 @@ th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
     font-size:10px;
   }
 }
+
+/* ================================================================
+   betöltődést jelző animált pontok
+   ================================================================ */
+.loading-dots{
+  display:inline-flex;
+  align-items:flex-end;
+  justify-content:center;
+  min-width:18px;
+  letter-spacing:0;
+}
+
+.loading-dots span{
+  display:inline-block;
+  width:6px;
+  text-align:center;
+  opacity:.25;
+  transform:scale(1);
+  animation:loadingDotPulse 1s infinite ease-in-out;
+}
+
+.loading-dots span:nth-child(1){
+  animation-delay:0s;
+}
+
+.loading-dots span:nth-child(2){
+  animation-delay:.2s;
+}
+
+.loading-dots span:nth-child(3){
+  animation-delay:.4s;
+}
+
+@keyframes loadingDotPulse{
+  0%, 100%{
+    opacity:.25;
+    transform:scale(1);
+  }
+  20%{
+    opacity:1;
+    transform:scale(1.35);
+  }
+}
