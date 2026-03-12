@@ -82,11 +82,47 @@ body.modal-open{overflow:hidden}
 .bmc-inline-mount img{display:block;height:40px;width:auto;border-radius:8px}
 .bmc-icon{display:none;width:42px;height:42px;border:1px solid #e2b800;border-radius:10px;background:#ffdd00;align-items:center;justify-content:center}
 .bmc-icon svg{width:20px;height:20px;display:block}
-.progress-wrap{min-width:180px;height:42px;padding:5px 9px;border:1px solid var(--line);border-radius:9px;background:var(--bg)}
-.topbar-actions .progress-wrap{margin-right:auto}
-.progress-meta{display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px}
-.progress-track{height:7px;background:#c4ccd8;border-radius:999px;overflow:hidden}
-.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#ffb703,#fb8500)}
+
+/* ================================================================
+   támogatók száma doboz
+   ================================================================ */
+.supporters-wrap{
+  min-width:180px;
+  height:42px;
+  padding:5px 9px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--bg);
+  display:flex;
+  align-items:center;
+}
+
+.topbar-actions .supporters-wrap{
+  margin-right:auto;
+}
+
+.supporters-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  width:100%;
+  font-size:12px;
+  gap:12px;
+}
+
+#supportersLabel{
+  white-space:nowrap;
+}
+
+#supportersCount{
+  font-weight:700;
+  white-space:nowrap;
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-end;
+  min-width:24px;
+}
+
 .bmac-widget{text-decoration:none;color:#2a1f10;background:#ffdd7e;border:1px solid #f2bf2e;padding:8px 10px;border-radius:9px;font-weight:600}
 .btn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;border:1px solid rgba(255,255,255,.25);padding:8px 11px;height:42px;text-decoration:none;color:#fff}
 #supportBtn{height:42px;min-width:190px;justify-content:flex-start}
@@ -302,20 +338,18 @@ th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
    ================================================================ */
 @media (max-width: 1024px){
   .topbar-actions{gap:6px;flex-wrap:nowrap;padding-bottom:2px;justify-content:flex-end}
-  .topbar-actions .progress-wrap{margin-right:0;position:fixed;bottom:12px;left:calc(70px + ((100vw - 70px) / 2));transform:translateX(-50%);z-index:40;width:min(340px,calc(100vw - 94px));min-width:220px;height:auto;padding:7px 10px;display:block}
+  .topbar-actions .supporters-wrap{margin-right:0;position:fixed;bottom:12px;left:calc(70px + ((100vw - 70px) / 2));transform:translateX(-50%);z-index:40;width:min(340px,calc(100vw - 94px));min-width:220px;height:auto;padding:10px 12px;display:flex}
   .btn{width:42px;min-width:42px;padding:0;justify-content:center}
   .btn > span:not(.btn-icon){display:none}
   .language-current{width:42px;min-width:42px;padding:0;justify-content:center}
   .language-current .lang-arrow,.language-current span:nth-child(2){display:none}
-  .progress-meta,.progress-track{display:flex}
-  .progress-track{display:block}
-  .progress-wrap::before{content:none}
   .bmc-inline-mount{order:2}
   #discordAddBtn{order:3}
   #supportBtn{order:4;width:42px;min-width:42px;height:42px;padding:0;justify-content:center}
   .language-picker{order:5}
   .bmc-inline-mount img{display:none}
   .bmc-icon{display:inline-flex}
+  .supporters-meta{font-size:13px}
   .content{padding-bottom:90px}
 }
 
