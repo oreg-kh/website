@@ -250,7 +250,6 @@ async function init() {
     ['Dashboard', t('sidebar.introduction'), t('intro.firstSteps')]
   );
 
-  await loadRevenue();
   await loadVisitorStats();
 }
 
@@ -317,10 +316,6 @@ function buildTopbar() {
   initDiscordSupportWidget();
 
   document.querySelectorAll('[data-i18n]').forEach(n => n.textContent = t(n.dataset.i18n));
-  const supportersLabel = document.getElementById('supportersLabel');
-  if (supportersLabel) {
-    supportersLabel.textContent = t('topbar.supporters');
-  }
 
   const picker = document.getElementById('languagePicker');
   const current = document.getElementById('languageCurrent');
@@ -880,56 +875,6 @@ function renderLanguageSettings(){
     buildSidebar();
     renderLanguageSettings();
   });
-}
-
-// ================================================================
-// támogatók számának betöltése
-// ================================================================
-async function loadRevenue(){
-  const supportersCountEl = document.getElementById('supportersCount');
-
-  // ================================================================
-  // betöltési állapot megjelenítése
-  // ================================================================
-  if (supportersCountEl) {
-    supportersCountEl.innerHTML = `
-      <span class="loading-dots" aria-label="Betöltés">
-        <span>.</span><span>.</span><span>.</span>
-      </span>
-    `;
-  }
-
-  // ================================================================
-  // ide írd a saját Apps Script webapp URL-edet
-  // ================================================================
-  const endpoint = 'https://script.google.com/macros/s/AKfycbxMQo9o6tIlVM7b5a6W5XBMpJTBybPyxLL8RANyp6YwJg4UJbiHi03VXBox2VV9YuUU/exec?action=revenue';
-
-  let supportersCount = 0;
-
-  try {
-    const response = await fetch(endpoint, {
-      method: 'GET',
-      cache: 'no-store'
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    if (!data.ok) {
-      throw new Error(data.error || 'Ismeretlen bevételi hiba');
-    }
-
-    supportersCount = Number(data.supportersCount || 0);
-  } catch (error) {
-    console.error('Támogatók száma hiba:', error);
-  }
-
-  if (supportersCountEl) {
-    supportersCountEl.textContent = supportersCount.toLocaleString('hu-HU');
-  }
 }
 
 // ================================================================
