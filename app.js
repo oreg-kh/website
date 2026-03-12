@@ -902,7 +902,7 @@ async function loadRevenue(){
   // ================================================================
   // ide írd a saját Apps Script webapp URL-edet
   // ================================================================
-  const endpoint = 'IDE_JON_A_GOOGLE_APPS_SCRIPT_EXEC_URL?action=revenue';
+  const endpoint = 'https://script.google.com/macros/s/AKfycbxMQo9o6tIlVM7b5a6W5XBMpJTBybPyxLL8RANyp6YwJg4UJbiHi03VXBox2VV9YuUU/exec?action=revenue';
 
   let supportersCount = 0;
 
