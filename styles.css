@@ -86,42 +86,6 @@ body.modal-open{overflow:hidden}
 /* ================================================================
    támogatók száma doboz
    ================================================================ */
-.supporters-wrap{
-  min-width:180px;
-  height:42px;
-  padding:5px 9px;
-  border:1px solid var(--line);
-  border-radius:9px;
-  background:var(--bg);
-  display:flex;
-  align-items:center;
-}
-
-.topbar-actions .supporters-wrap{
-  margin-right:auto;
-}
-
-.supporters-meta{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  width:100%;
-  font-size:12px;
-  gap:12px;
-}
-
-#supportersLabel{
-  white-space:nowrap;
-}
-
-#supportersCount{
-  font-weight:700;
-  white-space:nowrap;
-  display:inline-flex;
-  align-items:center;
-  justify-content:flex-end;
-  min-width:24px;
-}
 
 .bmac-widget{text-decoration:none;color:#2a1f10;background:#ffdd7e;border:1px solid #f2bf2e;padding:8px 10px;border-radius:9px;font-weight:600}
 .btn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;border:1px solid rgba(255,255,255,.25);padding:8px 11px;height:42px;text-decoration:none;color:#fff}
@@ -338,7 +302,6 @@ th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
    ================================================================ */
 @media (max-width: 1024px){
   .topbar-actions{gap:6px;flex-wrap:nowrap;padding-bottom:2px;justify-content:flex-end}
-  .topbar-actions .supporters-wrap{margin-right:0;position:fixed;bottom:12px;left:calc(70px + ((100vw - 70px) / 2));transform:translateX(-50%);z-index:40;width:min(340px,calc(100vw - 94px));min-width:220px;height:auto;padding:10px 12px;display:flex}
   .btn{width:42px;min-width:42px;padding:0;justify-content:center}
   .btn > span:not(.btn-icon){display:none}
   .language-current{width:42px;min-width:42px;padding:0;justify-content:center}
@@ -349,7 +312,6 @@ th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
   .language-picker{order:5}
   .bmc-inline-mount img{display:none}
   .bmc-icon{display:inline-flex}
-  .supporters-meta{font-size:13px}
   .content{padding-bottom:90px}
 }
 
