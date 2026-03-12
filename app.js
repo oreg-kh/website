@@ -883,27 +883,42 @@ function renderLanguageSettings(){
 // buy me a coffee cél progress betöltése
 // ================================================================
 async function loadRevenue(){
-  const monthlyGoal = state.menu.settings.monthlyGoal;
-  let amount = 0;
+  const monthlyGoal = Number(state.menu.settings.monthlyGoal || 0);
+  const fallbackRevenue = Number(localStorage.getItem('fallbackRevenue') || 120);
+  const rollover = Number(localStorage.getItem('rollover') || 0);
+
+  // ================================================================
+  // ide írd a saját Apps Script webapp URL-edet
+  // ================================================================
+  const endpoint = 'https://script.google.com/macros/s/AKfycbxMQo9o6tIlVM7b5a6W5XBMpJTBybPyxLL8RANyp6YwJg4UJbiHi03VXBox2VV9YuUU/exec?action=revenue';
+
+  let amount = fallbackRevenue;
 
   try {
-    const r = await fetch(state.menu.settings.buyMeACoffee.apiUrl, {
-      headers: {
-        Authorization: `Bearer ${state.menu.settings.buyMeACoffee.token}`
-      }
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      cache: 'no-store'
     });
 
-    const data = await r.json();
-    amount = (data?.data || []).reduce((sum, s) => sum + Number(s.support_coffee_price || 0), 0);
-  } catch {
-    amount = Number(localStorage.getItem('fallbackRevenue') || 120);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (!data.ok) {
+      throw new Error(data.error || 'Ismeretlen bevételi hiba');
+    }
+
+    amount = Number(data.amount || 0);
+  } catch (error) {
+    console.error('Buy Me a Coffee bevétel hiba:', error);
   }
 
-  const rollover = Number(localStorage.getItem('rollover') || 0);
   const effective = amount + rollover;
-  const pct = Math.min(100, (effective / monthlyGoal) * 100);
+  const pct = monthlyGoal > 0 ? Math.min(100, (effective / monthlyGoal) * 100) : 0;
 
-  if (effective > monthlyGoal) {
+  if (effective > monthlyGoal && monthlyGoal > 0) {
     localStorage.setItem('rollover', String(effective - monthlyGoal));
   }
 
