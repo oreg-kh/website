@@ -42,7 +42,8 @@
     "content.optionFormat": "Formátum",
     "content.viewImage": "Kép megtekintése",
     "content.imageNotFound": "Ehhez a parancshoz nem található kép.",
-    "content.close": "Bezárás"
+    "content.close": "Bezárás",
+    "topbar.supporters": "Támogatók"
   },
   "en": {
     "topbar.discordAdd": "Add to Discord",
@@ -59,7 +60,8 @@
     "content.demoImage": "Demo image",
     "content.viewImage": "View image",
     "content.imageNotFound": "No image was found for this command.",
-    "content.close": "Close"
+    "content.close": "Close",
+    "topbar.supporters": "Supporters"
   },
   "ar": {
     "topbar.discordAdd": "أضف إلى ديسكورد",
