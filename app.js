@@ -887,6 +887,24 @@ async function loadRevenue(){
   const fallbackRevenue = Number(localStorage.getItem('fallbackRevenue') || 120);
   const rollover = Number(localStorage.getItem('rollover') || 0);
 
+  const progressAmountEl = document.getElementById('progressAmount');
+  const progressFillEl = document.getElementById('progressFill');
+
+  // ================================================================
+  // betöltési állapot megjelenítése
+  // ================================================================
+  if (progressAmountEl) {
+    progressAmountEl.innerHTML = `
+      <span class="loading-dots" aria-label="Betöltés">
+        <span>.</span><span>.</span><span>.</span>
+      </span>
+    `;
+  }
+
+  if (progressFillEl) {
+    progressFillEl.style.width = '0%';
+  }
+
   // ================================================================
   // ide írd a saját Apps Script webapp URL-edet
   // ================================================================
@@ -922,8 +940,13 @@ async function loadRevenue(){
     localStorage.setItem('rollover', String(effective - monthlyGoal));
   }
 
-  document.getElementById('progressAmount').textContent = `${effective.toFixed(0)} / ${monthlyGoal}`;
-  document.getElementById('progressFill').style.width = `${pct}%`;
+  if (progressAmountEl) {
+    progressAmountEl.textContent = `${effective.toFixed(0)} / ${monthlyGoal}`;
+  }
+
+  if (progressFillEl) {
+    progressFillEl.style.width = `${pct}%`;
+  }
 }
 
 // ================================================================
