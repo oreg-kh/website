@@ -969,7 +969,12 @@ function formatFooterDate(dateString) {
 // utolsó frissítés betöltése GitHubból
 // ================================================================
 async function loadLastUpdatedFromGitHub() {
+  const target = document.getElementById('lastUpdatedText');
 
+  if (!target) {
+    console.error('Nem található a #lastUpdatedText elem.');
+    return;
+  }
   // ================================================================
   // állítsd be a saját GitHub repo adataidra
   // ================================================================
