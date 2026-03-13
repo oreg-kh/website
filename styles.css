@@ -893,6 +893,17 @@ td {
 
   #discordAddBtn {
     order: 3;
+    width: 42px;
+    min-width: 42px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  /* ================================================================
+     mobil és tablet nézetben a Bot hozzáadása gombból csak az ikon látszódjon
+     ================================================================ */
+  #discordAddBtn > span:not(.btn-icon) {
+    display: none !important;
   }
 
   #supportBtn {
