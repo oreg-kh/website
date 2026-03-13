@@ -81,6 +81,7 @@ async function init() {
     );
 
     await loadVisitorStats();
+    await loadLastUpdatedFromGitHub();
   } catch (error) {
     console.error('Inicializálási hiba:', error);
 
@@ -887,7 +888,6 @@ function renderCommand(cmd, groupKey, subKey) {
 function renderAppearance() {
   setTopBreadcrumb(['Dashboard', t('sidebar.settings'), t('settings.appearance')]);
   document.getElementById('content').innerHTML = `<div class="card"><h1>${t('settings.appearance')}</h1><div class="list-grid">${['dark', 'light'].map(k => `<button class="sub-item" data-theme="${k}">${t('settings.' + k)}</button>`).join('')}</div></div>`;
-
   document.querySelectorAll('[data-theme]').forEach(b => {
     b.onclick = () => {
       state.theme = b.dataset.theme;
@@ -903,7 +903,6 @@ function renderAppearance() {
 function renderLanguageSettings() {
   setTopBreadcrumb(['Dashboard', t('sidebar.settings'), t('settings.language')]);
   document.getElementById('content').innerHTML = `<div class="card"><h1>${t('settings.language')}</h1><div class="list-grid">${state.menu.languages.map(l => `<button class="sub-item" data-lang="${l.code}"><span class="btn-icon">${svgFlag(l.country)}</span> ${l.name}</button>`).join('')}</div></div>`;
-
   document.querySelectorAll('[data-lang]').forEach(b => {
     b.onclick = () => {
       state.lang = b.dataset.lang;
@@ -936,7 +935,75 @@ function getBudapestDateString() {
 }
 
 // ================================================================
-// látogatói statisztika betöltése google apps scriptből
+// dátum formázása: YYYY. MM. DD.
+// ================================================================
+function formatFooterDate(dateString) {
+  const date = new Date(dateString);
+
+  if (Number.isNaN(date.getTime())) {
+    return 'ismeretlen';
+  }
+
+  const formatter = new Intl.DateTimeFormat('hu-HU', {
+    timeZone: 'Europe/Budapest',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
+
+  const parts = formatter.formatToParts(date);
+  const year = parts.find(p => p.type === 'year')?.value;
+  const month = parts.find(p => p.type === 'month')?.value;
+  const day = parts.find(p => p.type === 'day')?.value;
+
+  return `${year}. ${month}. ${day}.`;
+}
+
+// ================================================================
+// utolsó frissítés betöltése GitHubból
+// ================================================================
+async function loadLastUpdatedFromGitHub() {
+  const target = document.getElementById('lastUpdatedText');
+  if (!target) return;
+
+  // ================================================================
+  // állítsd be a saját GitHub repo adataidra
+  // ================================================================
+  const owner = 'oreg-kh';
+  const repo = 'website';
+  const branch = 'main';
+
+  try {
+    const url = `https://api.github.com/repos/${owner}/${repo}/commits?sha=${encodeURIComponent(branch)}&per_page=1`;
+
+    const response = await fetch(url, {
+      headers: {
+        Accept: 'application/vnd.github+json'
+      },
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error(`GitHub API hiba: ${response.status}`);
+    }
+
+    const commits = await response.json();
+    const latestCommit = Array.isArray(commits) ? commits[0] : null;
+    const commitDate = latestCommit?.commit?.committer?.date || latestCommit?.commit?.author?.date;
+
+    if (!commitDate) {
+      throw new Error('Nem található commit dátum.');
+    }
+
+    target.textContent = formatFooterDate(commitDate);
+  } catch (error) {
+    console.error('Utolsó frissítés lekérése sikertelen:', error);
+    target.textContent = 'nem elérhető';
+  }
+}
+
+// ================================================================
+// látogatói statisztika betöltése Google Apps Scriptből
 // ================================================================
 async function loadVisitorStats() {
   const endpoint = 'https://script.google.com/macros/s/AKfycbz0CpGtSId3S33ZAL6HmHYFntOB_Xl8faC8HWRwzhp1Hysq5EtIbUBn0BcvuLFD9qEk/exec?action=stats';
