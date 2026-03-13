@@ -13,20 +13,20 @@
       <div class="icon-rail" id="iconRail"></div>
 
       <div class="rail-visitors">
-        <div class="rail-visitors-title">Látogatók:</div>
+        <div class="rail-visitors-title" data-i18n="sidebar.visitors">Látogatók:</div>
         <div class="rail-visitors-list">
           <div class="rail-visitors-item">
-            <span class="rail-visitors-label">Ma</span>
+            <span class="rail-visitors-label" data-i18n="sidebar.visitorsToday">Ma</span>
             <strong id="visitorToday">
-              <span class="loading-dots" aria-label="Betöltés">
+              <span class="loading-dots" data-i18n-aria-label="common.loading" aria-label="Betöltés">
                 <span>.</span><span>.</span><span>.</span>
               </span>
             </strong>
           </div>
           <div class="rail-visitors-item">
-            <span class="rail-visitors-label">Összesen</span>
+            <span class="rail-visitors-label" data-i18n="sidebar.visitorsTotal">Összesen</span>
             <strong id="visitorTotal">
-              <span class="loading-dots" aria-label="Betöltés">
+              <span class="loading-dots" data-i18n-aria-label="common.loading" aria-label="Betöltés">
                 <span>.</span><span>.</span><span>.</span>
               </span>
             </strong>
@@ -64,8 +64,8 @@
           <a id="supportBtn" class="btn btn-support" href="#" aria-expanded="false">
             <span class="btn-icon" id="supportIcon"></span>
             <span class="support-meta">
-              <strong id="supportBtnName">Betöltés...</strong>
-              <small id="supportBtnStatus">Szerveradatok...</small>
+              <strong id="supportBtnName" data-i18n="support.loadingName">Betöltés...</strong>
+              <small id="supportBtnStatus" data-i18n="support.loadingStatus">Szerveradatok...</small>
             </span>
           </a>
 
@@ -73,11 +73,11 @@
             <div class="discord-widget-header">
               <img class="discord-widget-avatar" src="images/brian-the-barbarian.png" alt="Brian the Barbarian" />
               <div class="discord-widget-meta">
-                <div id="discordWidgetName" class="discord-widget-name">Discord szerver</div>
-                <div id="discordWidgetStatus" class="discord-widget-status">Adatok betöltése...</div>
+                <div id="discordWidgetName" class="discord-widget-name" data-i18n="support.serverName">Discord szerver</div>
+                <div id="discordWidgetStatus" class="discord-widget-status" data-i18n="support.loadingData">Adatok betöltése...</div>
               </div>
             </div>
-            <div id="discordWidgetLoading" class="discord-widget-loading">Widget betöltése...</div>
+            <div id="discordWidgetLoading" class="discord-widget-loading" data-i18n="support.widgetLoading">Widget betöltése...</div>
             <iframe id="discordWidgetFrame" class="discord-widget-frame" title="Discord widget" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
           </div>
 
@@ -94,9 +94,9 @@
         <div class="downbar-inner">
           <div class="downbar-title">Brian the Barbarian Discord bot</div>
           <div class="downbar-updated">
-            Utolsó frissítés:
+            <span data-i18n="footer.lastUpdated">Utolsó frissítés:</span>
             <span id="lastUpdatedText">
-              <span class="loading-dots" aria-label="Betöltés">
+              <span class="loading-dots" data-i18n-aria-label="common.loading" aria-label="Betöltés">
                 <span>.</span><span>.</span><span>.</span>
               </span>
             </span>
