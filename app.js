@@ -79,9 +79,8 @@ async function init() {
       getPageContent('pages.firstSteps'),
       ['Dashboard', t('sidebar.introduction'), t('intro.firstSteps')]
     );
-
+    loadLastUpdatedFromGitHub();
     await loadVisitorStats();
-    await loadLastUpdatedFromGitHub();
   } catch (error) {
     console.error('Inicializálási hiba:', error);
 
