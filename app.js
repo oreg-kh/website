@@ -21,12 +21,23 @@ const icons = {
 };
 
 const t = (k) => state.i18n?.[state.lang]?.[k] || state.i18n?.hu?.[k] || k;
+const tp = (k, vars = {}) => {
+  let text = t(k);
+
+  Object.entries(vars).forEach(([name, value]) => {
+    text = text.replaceAll(`{${name}}`, String(value));
+  });
+
+  return text;
+};
+
 const el = (tag, cls, html = '') => {
   const e = document.createElement(tag);
   if (cls) e.className = cls;
   e.innerHTML = html;
   return e;
 };
+
 const chevronIcon = () => '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 6 8l4-3.5"/></svg>';
 const sidebarToggleIcon = (collapsed) => collapsed
   ? '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M8 2.5 4 6l4 3.5"/></svg>'
@@ -79,16 +90,17 @@ async function init() {
       getPageContent('pages.firstSteps'),
       ['Dashboard', t('sidebar.introduction'), t('intro.firstSteps')]
     );
-    loadLastUpdatedFromGitHub();
+
+    await loadLastUpdatedFromGitHub();
     await loadVisitorStats();
   } catch (error) {
     console.error('Inicializálási hiba:', error);
 
     document.body.innerHTML = `
       <div style="padding:24px;font-family:Inter,Segoe UI,Arial,sans-serif;">
-        <h1>Betöltési hiba</h1>
-        <p>Nem sikerült betölteni a szükséges JSON fájlokat.</p>
-        <p>Nézd meg a böngésző konzolt is a pontos hibáért.</p>
+        <h1>${t('errors.load.title')}</h1>
+        <p>${t('errors.load.description')}</p>
+        <p>${t('errors.load.consoleHint')}</p>
       </div>
     `;
   }
@@ -255,18 +267,18 @@ async function initDiscordSupportWidget() {
     if (!res.ok) throw new Error('widget');
 
     const data = await res.json();
-    const serverName = data.name || 'Discord szerver';
+    const serverName = data.name || t('support.serverName');
     const online = data.presence_count ?? 0;
 
     supportName.textContent = serverName;
-    supportStatus.textContent = `${online} online`;
+    supportStatus.textContent = tp('support.onlineCount', { count: online });
     name.textContent = serverName;
-    status.textContent = `${online} tag online`;
+    status.textContent = tp('support.membersOnlineCount', { count: online });
   } catch {
-    supportName.textContent = 'Discord szerver';
-    supportStatus.textContent = 'A widget adatai most nem érhetők el';
-    name.textContent = 'Discord szerver';
-    status.textContent = 'A widget adatai most nem érhetők el';
+    supportName.textContent = t('support.serverName');
+    supportStatus.textContent = t('support.unavailable');
+    name.textContent = t('support.serverName');
+    status.textContent = t('support.unavailable');
   }
 }
 
@@ -944,7 +956,7 @@ function formatFooterDate(dateString) {
   const date = new Date(dateString);
 
   if (Number.isNaN(date.getTime())) {
-    return '...';
+    return t('common.notAvailable');
   }
 
   const formatter = new Intl.DateTimeFormat('hu-HU', {
@@ -979,6 +991,7 @@ async function loadLastUpdatedFromGitHub() {
     console.error('Nem található a #lastUpdatedText elem.');
     return;
   }
+
   // ================================================================
   // állítsd be a saját GitHub repo adataidra
   // ================================================================
@@ -1011,7 +1024,7 @@ async function loadLastUpdatedFromGitHub() {
     target.textContent = formatFooterDate(commitDate);
   } catch (error) {
     console.error('Utolsó frissítés lekérése sikertelen:', error);
-    target.textContent = 'nem elérhető';
+    target.textContent = t('common.notAvailable');
   }
 }
 
