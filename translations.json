@@ -79,8 +79,10 @@
   "docs.formats.tribesAmp": "A klánok elválasztása: &",
   "docs.formats.playersAmp": "A játékosok elválasztása: &",
   "docs.formats.eventsAmp": "Az események elválasztása: &",
+  "docs.formats.fileTxt": ".txt",
+  "docs.formats.percent": "x%",
 
-  "docs.commands.add-emojis.description": "Emojik hozzáadása a szerverhez.",
+  "docs.commands.add-emojis.description": "Használj emojikat a szervereden.",
   "docs.commands.add-emojis.access": "Bot tulajdonos, Szerver tulajdonos, Adminisztrátor, Jogosult szerepkör",
 
   "docs.commands.calculate-backtime.description": "Add meg a koordinátákat, a pontos dátumot és a támadó sereg sebességét.",
@@ -101,10 +103,10 @@
   "docs.commands.compare-tribes-orientation.description": "Grafikont készít az első 20 klán beállítottságáról.",
   "docs.commands.compare-tribes-orientation.access": "Bot tulajdonos, Szerver tulajdonos, Adminisztrátor, Jogosult szerepkör, Minden felhasználó",
 
-  "docs.commands.create-conquer-notification.description": "Létrehoz egy foglalásértesítést.",
+  "docs.commands.create-conquer-notification.description": "Létrehoz egy foglalás értesítést.",
   "docs.commands.create-conquer-notification.access": "Bot tulajdonos, Szerver tulajdonos, Adminisztrátor, Jogosult szerepkör",
 
-  "docs.commands.create-defender-pack.description": "Védelmi csomagot hoz létre.",
+  "docs.commands.create-defender-pack.description": "Védelmi csomag létrehozása",
   "docs.commands.create-defender-pack.access": "Bot tulajdonos, Szerver tulajdonos, Adminisztrátor, Jogosult szerepkör",
 
   "docs.commands.create-mail-list.description": "Levelezőlistát készít a klán játékosaiból.",
@@ -119,7 +121,7 @@
   "docs.commands.create-poll.description": "Anonim szavazást készít (Igen / Nem / Tartózkodom).",
   "docs.commands.create-poll.access": "Bot tulajdonos, Szerver tulajdonos, Adminisztrátor, Jogosult szerepkör",
 
-  "docs.commands.create-resource-pack.description": "Nyersanyagcsomagot hoz létre.",
+  "docs.commands.create-resource-pack.description": "Nyersanyag csomag létrehozása",
   "docs.commands.create-resource-pack.access": "Bot tulajdonos, Szerver tulajdonos, Adminisztrátor, Jogosult szerepkör",
 
   "docs.commands.create-ticket-panel.description": "Létrehoz egy ticket panelt ebben a csatornában.",
@@ -164,10 +166,10 @@
   "docs.commands.settings.subcommands.delete-channel.description": "Csatornaszintű beállítások törlése.",
   "docs.commands.settings.subcommands.delete-channel.access": "Bot tulajdonos, Szerver tulajdonos, Adminisztrátor, Jogosult szerepkör",
 
-  "docs.commands.toggle-coords-info.description": "A koordinátához kapcsolódó információk megjelenítésének beállítása.",
+  "docs.commands.toggle-coords-info.description": "Koordinához kapcsolódó információk mutatása.",
   "docs.commands.toggle-coords-info.access": "Bot tulajdonos, Szerver tulajdonos, Adminisztrátor, Jogosult szerepkör",
 
-  "docs.commands.toggle-public-report.description": "Képernyőképet készít a jelentésről az URL használatával.",
+  "docs.commands.toggle-public-report.description": "Képernyőkép készítése a jelentésről az url használatával.",
   "docs.commands.toggle-public-report.access": "Bot tulajdonos, Szerver tulajdonos, Adminisztrátor, Jogosult szerepkör"
 },
 "en": {
