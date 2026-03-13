@@ -50,8 +50,8 @@
   "content.imageNotFound": "Ehhez a parancshoz nem található kép.",
   "content.close": "Bezárás",
 
-  "common.yes": "Igen",
-  "common.no": "Nem",
+  "common.yes": "igen",
+  "common.no": "nem",
 
   "docs.defaultAccess": "Bárki",
   "docs.defaultDescription": "A bot automatizált folyamatot indít, ellenőrzéseket végez, majd naplózza az eredményt.",
