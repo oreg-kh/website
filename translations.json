@@ -169,4 +169,52 @@
 
   "docs.commands.toggle-public-report.description": "Képernyőképet készít a jelentésről az URL használatával.",
   "docs.commands.toggle-public-report.access": "Bot tulajdonos, Szerver tulajdonos, Adminisztrátor, Jogosult szerepkör"
+},
+"en": {
+
+},
+"ar": {
+
+},
+"cs": {
+
+},
+"nl": {
+
+},
+"fr": {
+
+},
+"de": {
+
+},
+"el": {
+
+},
+"it": {
+
+},
+"pl": {
+
+},
+"pt-BR": {
+
+},
+"pt": {
+
+},
+"ro": {
+
+},
+"sk": {
+
+},
+"es": {
+
+},
+"de-CH": {
+
+},
+"tr": {
+
 }
