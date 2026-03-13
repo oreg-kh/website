@@ -1,3 +1,4 @@
+/*
 const DEFAULT_MENU = {
   "settings": {
     "monthlyGoal": 500,
@@ -175,6 +176,7 @@ const DEFAULT_COMMAND_DOCS = {
     }
   }
 };
+*/
 
 const state = {
   lang: 'hu',
