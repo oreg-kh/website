@@ -450,12 +450,26 @@ function getPageContent(contentKey) {
 }
 
 // ================================================================
+// oldal szövegének formázása bekezdésekre bontva
+// ================================================================
+function formatPageText(text) {
+  if (!text) return '';
+
+  return String(text)
+    .split(/\n\s*\n/)
+    .map(paragraph => paragraph.trim())
+    .filter(Boolean)
+    .map(paragraph => `<p class="page-intro">${paragraph}</p>`)
+    .join('');
+}
+
+// ================================================================
 // egyszerű tartalmi oldal renderelése
 // ================================================================
 function renderPage(page, crumb) {
   setTopBreadcrumb(crumb);
 
-  const introHtml = page.text ? `<p class="page-intro">${page.text}</p>` : '';
+  const introHtml = formatPageText(page.text);
   const stepsHtml = Array.isArray(page.steps) && page.steps.length
     ? `
       <ol class="setup-steps">
