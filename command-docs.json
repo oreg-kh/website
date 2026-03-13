@@ -78,7 +78,7 @@
           "type": "string",
           "required": true,
           "source": "autocomplete",
-          "values": ["unit"],
+          "values": ["egység neve"],
           "format": ""
         }
       ],
@@ -93,7 +93,7 @@
           "type": "number",
           "required": true,
           "source": "input",
-          "values": ["number"],
+          "values": ["1-1125899906842623"],
           "format": ""
         }
       ],
@@ -108,7 +108,7 @@
           "type": "number",
           "required": true,
           "source": "input",
-          "values": ["number"],
+          "values": ["1-94906265"],
           "format": ""
         }
       ],
@@ -274,7 +274,7 @@
       "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/create-mail-list": {
-      "description": "Levelezőlistát készít a klán játékosaiból",
+      "description": "Levelezőlistát készít a klán játékosaiból.",
       "options": [
         {
           "name": "tribe",
@@ -460,8 +460,8 @@
           "type": "number",
           "required": false,
           "source": "input",
-          "values": ["number"],
-          "format": "min. 1 óra; alapértelmezett: 1"
+          "values": ["minimum 1 óra; alapértelmezett: 1 óra"],
+          "format": ""
         }
       ],
       "subcommands": {},
@@ -475,16 +475,16 @@
           "type": "string",
           "required": true,
           "source": "input",
-          "values": ["koordináta"],
-          "format": "max. 5 koordináta; elválasztó: vessző, szóköz, pontosvessző vagy új sor"
+          "values": ["koordináta(max. 5)"],
+          "format": "koordináták elválasztása: vessző, szóköz, pontosvessző vagy új sor"
         },
         {
           "name": "required_pack",
           "type": "number",
           "required": true,
           "source": "input",
-          "values": ["number"],
-          "format": "min: 1; max: 10000"
+          "values": ["1-10000"],
+          "format": ""
         },
         {
           "name": "flag",
@@ -519,8 +519,8 @@
           "type": "string",
           "required": false,
           "source": "input",
-          "values": ["x%"],
-          "format": "pl.: 35%"
+          "values": ["1%-200%"],
+          "format": "x%"
         }
       ],
       "subcommands": {},
