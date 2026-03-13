@@ -1296,3 +1296,60 @@ td {
   line-height: 1.6;
   color: var(--text);
 }
+
+/* ================================================================
+   tartalom terítése topbar és downbar között
+   ================================================================ */
+.content {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ================================================================
+   alsó sáv
+   ================================================================ */
+.downbar {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  border-top: 1px solid var(--line);
+  background: var(--main);
+  flex: 0 0 auto;
+}
+
+.downbar-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.downbar-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.downbar-updated {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+@media (max-width: 768px) {
+  .downbar {
+    padding: 8px 10px;
+  }
+
+  .downbar-title {
+    font-size: 12px;
+  }
+
+  .downbar-updated {
+    font-size: 10px;
+  }
+}
