@@ -940,10 +940,10 @@ function formatFooterDate(dateString) {
   const date = new Date(dateString);
 
   if (Number.isNaN(date.getTime())) {
-    return 'ismeretlen';
+    return '...';
   }
 
-  const formatter = new Intl.DateTimeFormat('en-GB', {
+  const formatter = new Intl.DateTimeFormat('hu-HU', {
     timeZone: 'Europe/Budapest',
     year: 'numeric',
     month: '2-digit',
