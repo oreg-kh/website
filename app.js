@@ -198,8 +198,8 @@ const icons = {
   support: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="currentColor" stroke="none"><path d="M267.7 576.9C267.7 576.9 267.7 576.9 267.7 576.9L229.9 603.6C222.6 608.8 213 609.4 205 605.3C197 601.2 192 593 192 584L192 512L160 512C107 512 64 469 64 416L64 192C64 139 107 96 160 96L480 96C533 96 576 139 576 192L576 416C576 469 533 512 480 512L359.6 512L267.7 576.9zM332 472.8C340.1 467.1 349.8 464 359.7 464L480 464C506.5 464 528 442.5 528 416L528 192C528 165.5 506.5 144 480 144L160 144C133.5 144 112 165.5 112 192L112 416C112 442.5 133.5 464 160 464L216 464C226.4 464 235.3 470.6 238.6 479.9C239.5 482.4 240 485.1 240 488L240 537.7C272.7 514.6 303.3 493 331.9 472.8z"/></svg>`
 };
 
-const t = (k)=> state.i18n[state.lang]?.[k] || state.i18n.hu?.[k] || k;
-const el = (tag, cls, html='') => { const e=document.createElement(tag); if(cls) e.className=cls; e.innerHTML=html; return e; };
+const t = (k) => state.i18n[state.lang]?.[k] || state.i18n.hu?.[k] || k;
+const el = (tag, cls, html = '') => { const e = document.createElement(tag); if (cls) e.className = cls; e.innerHTML = html; return e; };
 const chevronIcon = () => '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 6 8l4-3.5"/></svg>';
 const sidebarToggleIcon = (collapsed) => collapsed
   ? '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M8 2.5 4 6l4 3.5"/></svg>'
@@ -244,9 +244,9 @@ async function init() {
   buildIconRail();
   buildSidebar();
   initSidebarToggle();
-  
+
   renderPage(
-    { title: t('pages.firstSteps.title'), text: t('pages.firstSteps.text') },
+    getPageContent('pages.firstSteps'),
     ['Dashboard', t('sidebar.introduction'), t('intro.firstSteps')]
   );
 
@@ -264,13 +264,13 @@ function applyTheme() {
 // ================================================================
 // oldalsáv állapot beállítása
 // ================================================================
-function setSidebarHidden(hidden){
+function setSidebarHidden(hidden) {
   const shell = document.querySelector('.sidebar-shell');
   const appShell = document.querySelector('.app-shell');
   const btn = document.getElementById('sidebarToggle');
   const collapsedBtn = document.getElementById('sidebarToggleCollapsed');
 
-  if(!shell || !btn || !collapsedBtn || !appShell) return;
+  if (!shell || !btn || !collapsedBtn || !appShell) return;
 
   shell.classList.toggle('submenus-hidden', hidden);
   appShell.classList.toggle('sidebar-collapsed', hidden);
@@ -283,8 +283,8 @@ function setSidebarHidden(hidden){
 // ================================================================
 // mobil nézetben oldalsáv automatikus elrejtése kiválasztás után
 // ================================================================
-function hideSidebarAfterSelectionOnMobile(){
-  if(window.innerWidth <= 1100){
+function hideSidebarAfterSelectionOnMobile() {
+  if (window.innerWidth <= 1100) {
     setSidebarHidden(true);
   }
 }
@@ -292,11 +292,11 @@ function hideSidebarAfterSelectionOnMobile(){
 // ================================================================
 // oldalsáv nyitás / zárás
 // ================================================================
-function initSidebarToggle(){
+function initSidebarToggle() {
   const btn = document.getElementById('sidebarToggle');
   const collapsedBtn = document.getElementById('sidebarToggleCollapsed');
 
-  if(!btn || !collapsedBtn) return;
+  if (!btn || !collapsedBtn) return;
 
   const hidden = localStorage.getItem('submenusHidden') === '1';
   setSidebarHidden(hidden);
@@ -353,7 +353,7 @@ function buildTopbar() {
 // ================================================================
 // discord támogatói widget inicializálása
 // ================================================================
-async function initDiscordSupportWidget(){
+async function initDiscordSupportWidget() {
   const guildId = '891626562871525398';
   const btn = document.getElementById('supportBtn');
   const supportName = document.getElementById('supportBtnName');
@@ -364,7 +364,7 @@ async function initDiscordSupportWidget(){
   const frame = document.getElementById('discordWidgetFrame');
   const loading = document.getElementById('discordWidgetLoading');
 
-  if(!btn || !supportName || !supportStatus || !panel || !name || !status || !frame || !loading) return;
+  if (!btn || !supportName || !supportStatus || !panel || !name || !status || !frame || !loading) return;
 
   btn.onclick = async (e) => {
     e.preventDefault();
@@ -373,10 +373,10 @@ async function initDiscordSupportWidget(){
     const open = panel.classList.toggle('open');
     btn.setAttribute('aria-expanded', String(open));
 
-    if(open){
+    if (open) {
       const theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
 
-      if(!state.discordWidgetLoaded || state.discordWidgetTheme !== theme){
+      if (!state.discordWidgetLoaded || state.discordWidgetTheme !== theme) {
         frame.src = `https://discord.com/widget?id=${guildId}&theme=${theme}`;
         state.discordWidgetLoaded = true;
         state.discordWidgetTheme = theme;
@@ -389,19 +389,19 @@ async function initDiscordSupportWidget(){
 
   panel.onclick = (e) => e.stopPropagation();
 
-  if(!state.discordWidgetOutsideBound){
+  if (!state.discordWidgetOutsideBound) {
     document.addEventListener('click', (e) => {
-      if(!panel.classList.contains('open')) return;
-      if(btn.contains(e.target) || panel.contains(e.target)) return;
+      if (!panel.classList.contains('open')) return;
+      if (btn.contains(e.target) || panel.contains(e.target)) return;
       panel.classList.remove('open');
       btn.setAttribute('aria-expanded', 'false');
     });
     state.discordWidgetOutsideBound = true;
   }
 
-  try{
+  try {
     const res = await fetch(`https://discord.com/api/guilds/${guildId}/widget.json`);
-    if(!res.ok) throw new Error('widget');
+    if (!res.ok) throw new Error('widget');
 
     const data = await res.json();
     const serverName = data.name || 'Discord szerver';
@@ -411,7 +411,7 @@ async function initDiscordSupportWidget(){
     supportStatus.textContent = `${online} online`;
     name.textContent = serverName;
     status.textContent = `${online} tag online`;
-  }catch{
+  } catch {
     supportName.textContent = 'Discord szerver';
     supportStatus.textContent = 'A widget adatai most nem érhetők el';
     name.textContent = 'Discord szerver';
@@ -422,7 +422,7 @@ async function initDiscordSupportWidget(){
 // ================================================================
 // zászló ikon html generálása
 // ================================================================
-function svgFlag(country){
+function svgFlag(country) {
   const code = String(country || '').toLowerCase();
   return `<img class="flag-img" src="https://flagcdn.com/${code}.svg" alt="${country} flag" loading="lazy"/>`;
 }
@@ -430,22 +430,22 @@ function svgFlag(country){
 // ================================================================
 // morzsa navigáció beállítása
 // ================================================================
-function setTopBreadcrumb(parts){
+function setTopBreadcrumb(parts) {
   const n = document.getElementById('topBreadcrumb');
-  if(n) n.textContent = '';
+  if (n) n.textContent = '';
 }
 
 // ================================================================
 // bal oldali ikon sáv felépítése
 // ================================================================
-function buildIconRail(){
+function buildIconRail() {
   const rail = document.getElementById('iconRail');
   rail.innerHTML = '';
 
   state.menu.nav.forEach((group) => {
     const b = el('button', 'rail-item', icons[group.icon] || icons.intro);
 
-    if(group.id === state.activeGroupId) {
+    if (group.id === state.activeGroupId) {
       b.classList.add('active');
     }
 
@@ -476,8 +476,8 @@ function buildSidebar() {
 // ================================================================
 // oldalsáv elem felépítése
 // ================================================================
-function buildChild(child, group){
-  if(child.type === 'commandGroup'){
+function buildChild(child, group) {
+  if (child.type === 'commandGroup') {
     const block = el('div');
     const main = el('button', 'sub-item sub-toggle', `<span>${t(child.labelKey)}</span><span class="toggle-icon">${chevronIcon()}</span>`);
     const list = el('div', 'command-list');
@@ -503,7 +503,7 @@ function buildChild(child, group){
     return block;
   }
 
-  if(child.type === 'appearance'){
+  if (child.type === 'appearance') {
     const block = el('div');
     const main = el('button', 'sub-item sub-toggle', `<span>${t(child.labelKey)}</span><span class="toggle-icon">${chevronIcon()}</span>`);
     const list = el('div', 'command-list');
@@ -531,7 +531,7 @@ function buildChild(child, group){
     return block;
   }
 
-  if(child.type === 'language'){
+  if (child.type === 'language') {
     const block = el('div');
     const main = el('button', 'sub-item sub-toggle', `<span>${t(child.labelKey)}</span><span class="toggle-icon">${chevronIcon()}</span>`);
     const list = el('div', 'command-list');
@@ -563,9 +563,9 @@ function buildChild(child, group){
 
   const b = el('button', 'sub-item', t(child.labelKey));
   b.onclick = () => {
-    if(child.type === 'page') {
+    if (child.type === 'page') {
       renderPage(
-        { title: t(`${child.contentKey}.title`), text: t(`${child.contentKey}.text`) },
+        getPageContent(child.contentKey),
         [t(group.labelKey), t(child.labelKey)]
       );
       hideSidebarAfterSelectionOnMobile();
@@ -576,11 +576,70 @@ function buildChild(child, group){
 }
 
 // ================================================================
+// oldal tartalmának feloldása fordítási kulcsokból
+// ================================================================
+function getPageContent(contentKey) {
+  const page = {
+    title: t(`${contentKey}.title`),
+    text: t(`${contentKey}.text`)
+  };
+
+  const steps = [];
+
+  for (let i = 1; i <= 20; i++) {
+    const titleKey = `${contentKey}.steps.${i}.title`;
+    const textKey = `${contentKey}.steps.${i}.text`;
+
+    const stepTitle = t(titleKey);
+    const stepText = t(textKey);
+
+    const hasTitle = stepTitle !== titleKey;
+    const hasText = stepText !== textKey;
+
+    if (!hasTitle && !hasText) {
+      break;
+    }
+
+    steps.push({
+      title: hasTitle ? stepTitle : `${i}. lépés`,
+      text: hasText ? stepText : ''
+    });
+  }
+
+  if (steps.length) {
+    page.steps = steps;
+  }
+
+  return page;
+}
+
+// ================================================================
 // egyszerű tartalmi oldal renderelése
 // ================================================================
-function renderPage(page, crumb){
+function renderPage(page, crumb) {
   setTopBreadcrumb(crumb);
-  document.getElementById('content').innerHTML = `<div class="card"><h1>${page.title}</h1><p>${page.text}</p></div>`;
+
+  const introHtml = page.text ? `<p class="page-intro">${page.text}</p>` : '';
+  const stepsHtml = Array.isArray(page.steps) && page.steps.length
+    ? `
+      <ol class="setup-steps">
+        ${page.steps.map(step => `
+          <li class="setup-step">
+            <h2>${step.title}</h2>
+            <p>${step.text}</p>
+          </li>
+        `).join('')}
+      </ol>
+    `
+    : '';
+
+  document.getElementById('content').innerHTML = `
+    <div class="card">
+      <h1>${page.title}</h1>
+      ${introHtml}
+      ${stepsHtml}
+    </div>
+  `;
 }
 
 // ================================================================
@@ -686,7 +745,7 @@ function closeImageModal() {
 // ================================================================
 // parancs dokumentáció feloldása főparancsra és alparancsra
 // ================================================================
-function getResolvedCommandDoc(cmd){
+function getResolvedCommandDoc(cmd) {
   const docsConfig = state.commandDocs || DEFAULT_COMMAND_DOCS;
   const directDoc = docsConfig.commands?.[cmd];
 
@@ -718,14 +777,14 @@ function getResolvedCommandDoc(cmd){
 // ================================================================
 // saját kulcs ellenőrzése objektumon
 // ================================================================
-function hasOwnField(obj, key){
+function hasOwnField(obj, key) {
   return !!obj && Object.prototype.hasOwnProperty.call(obj, key);
 }
 
 // ================================================================
 // megjelenítendő szöveg normalizálása
 // ================================================================
-function formatDisplayValue(value, fallback = '-'){
+function formatDisplayValue(value, fallback = '-') {
   if (value === undefined || value === null) {
     return fallback;
   }
@@ -737,7 +796,7 @@ function formatDisplayValue(value, fallback = '-'){
 // ================================================================
 // hozzáférés feloldása parancs vagy alparancs szinten
 // ================================================================
-function getCommandAccess(doc, parentDoc, docsConfig){
+function getCommandAccess(doc, parentDoc, docsConfig) {
   if (hasOwnField(doc, 'access')) {
     return doc.access;
   }
@@ -755,7 +814,7 @@ function getCommandAccess(doc, parentDoc, docsConfig){
 // ha üres tömb; alapértelmezett opció csak akkor kell,
 // ha az options mező nincs megadva
 // ================================================================
-function getCommandOptions(doc, parentDoc, docsConfig){
+function getCommandOptions(doc, parentDoc, docsConfig) {
   if (hasOwnField(doc, 'options') && Array.isArray(doc.options)) {
     return doc.options;
   }
@@ -770,7 +829,7 @@ function getCommandOptions(doc, parentDoc, docsConfig){
 // ================================================================
 // lehetséges értékek cella formázása
 // ================================================================
-function formatCommandValuesCell(option){
+function formatCommandValuesCell(option) {
   const values = Array.isArray(option?.values)
     ? option.values
     : (option?.value !== undefined && option?.value !== null && option?.value !== '' ? [option.value] : []);
@@ -789,7 +848,7 @@ function formatCommandValuesCell(option){
 // ================================================================
 // parancs ismertető renderelése az új command-docs.json szerint
 // ================================================================
-function renderCommand(cmd, groupKey, subKey){
+function renderCommand(cmd, groupKey, subKey) {
   const imageName = cmd.replace(/^\//, '').replace(/\s+/g, '-');
   const imagePath = `images/${imageName}.png`;
   const { docsConfig, doc, parentDoc } = getResolvedCommandDoc(cmd);
@@ -851,9 +910,9 @@ function renderCommand(cmd, groupKey, subKey){
 // ================================================================
 // megjelenés oldal renderelése
 // ================================================================
-function renderAppearance(){
+function renderAppearance() {
   setTopBreadcrumb(['Dashboard', t('sidebar.settings'), t('settings.appearance')]);
-  document.getElementById('content').innerHTML = `<div class="card"><h1>${t('settings.appearance')}</h1><div class="list-grid">${['dark','light'].map(k => `<button class="sub-item" data-theme="${k}">${t('settings.' + k)}</button>`).join('')}</div></div>`;
+  document.getElementById('content').innerHTML = `<div class="card"><h1>${t('settings.appearance')}</h1><div class="list-grid">${['dark', 'light'].map(k => `<button class="sub-item" data-theme="${k}">${t('settings.' + k)}</button>`).join('')}</div></div>`;
   document.querySelectorAll('[data-theme]').forEach(b => b.onclick = () => {
     state.theme = b.dataset.theme;
     localStorage.setItem('theme', state.theme);
@@ -864,7 +923,7 @@ function renderAppearance(){
 // ================================================================
 // nyelv oldal renderelése
 // ================================================================
-function renderLanguageSettings(){
+function renderLanguageSettings() {
   setTopBreadcrumb(['Dashboard', t('sidebar.settings'), t('settings.language')]);
   document.getElementById('content').innerHTML = `<div class="card"><h1>${t('settings.language')}</h1><div class="list-grid">${state.menu.languages.map(l => `<button class="sub-item" data-lang="${l.code}"><span class="btn-icon">${svgFlag(l.country)}</span> ${l.name}</button>`).join('')}</div></div>`;
   document.querySelectorAll('[data-lang]').forEach(b => b.onclick = () => {
@@ -896,9 +955,6 @@ function getBudapestDateString() {
   return `${year}-${month}-${day}`;
 }
 
-// ================================================================
-// látogatói statisztika betöltése GoatCounterből
-// ================================================================
 // ================================================================
 // látogatói statisztika betöltése google apps scriptből
 // ================================================================
