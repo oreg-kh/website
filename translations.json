@@ -35,7 +35,7 @@
     "pages.firstSteps.steps.3.title": "Világ regisztrálása",
     "pages.firstSteps.steps.3.text": "Ha az egész szerver ugyanazt a világot használja, futtasd a /register-world-server parancsot. Ha csatornánként külön világot szeretnétek használni, akkor az adott csatornában a /register-world-channel parancsot használd.",
     "pages.firstSteps.steps.4.title": "Beállítás ellenőrzése és a funkciók használata",
-    "pages.firstSteps.steps.4.text": "A /settings list paranccsal ellenőrizheted a mentett beállításokat. Ezután már használhatod a térképes, statisztikai, kalkulátoros és értesítési parancsokat."
+    "pages.firstSteps.steps.4.text": "A /settings list paranccsal ellenőrizheted a mentett beállításokat. Ezután már használhatod a térképes, statisztikai, kalkulátoros és értesítési parancsokat.",
     "pages.privacy.title": "Privacy Policy",
     "pages.privacy.text": "A bot csak a működéshez szükséges adatokat kezeli, a felhasználó kérésére törölhetően.",
     "pages.terms.title": "Terms of Service",
