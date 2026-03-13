@@ -339,7 +339,8 @@
           "required": false,
           "source": "input",
           "values": [
-            "true/false"
+            "true",
+            "false"
           ],
           "format": ""
         },
@@ -787,7 +788,7 @@
       "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/register-world-channel": {
-      "description": "Válassz egy világot a csatornához.",
+      "description": "Válassz egy világot a Discord csatornához.",
       "options": [
         {
           "name": "domain",
@@ -824,7 +825,7 @@
           "required": true,
           "source": "autocomplete",
           "values": [
-            "világ"
+            "a világ neve"
           ],
           "format": ""
         }
@@ -833,7 +834,7 @@
       "access": "Bot tulajdonos, Szerver tulajdonos, Administrator, Jogosult szerep"
     },
     "/register-world-server": {
-      "description": "Válassz egy alapértelmezett világot az egész szerverhez.",
+      "description": "Válassz egy alapértelmezett világot az egész Discord szerverhez.",
       "options": [
         {
           "name": "domain",
@@ -870,7 +871,7 @@
           "required": true,
           "source": "autocomplete",
           "values": [
-            "világ"
+            "a világ neve"
           ],
           "format": ""
         }
