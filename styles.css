@@ -582,11 +582,25 @@ body.modal-open {
 }
 
 #discordAddBtn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+
+#discordAddBtn .btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
 }
 
 #discordAddBtn > span:not(.btn-icon) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
   font-weight: 700;
 }
 
