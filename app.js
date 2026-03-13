@@ -790,7 +790,9 @@ function translateCommandFormat(format) {
     'koordináták elválasztása: vessző, szóköz, pontosvessző vagy új sor': 'docs.formats.coordinatesList',
     'klánok elválasztása: &': 'docs.formats.tribesAmp',
     'játékosok elválasztása: &': 'docs.formats.playersAmp',
-    'események elválasztása: &': 'docs.formats.eventsAmp'
+    'események elválasztása: &': 'docs.formats.eventsAmp',
+    '.txt': 'docs.formats.fileTxt',
+    'x%': 'docs.formats.percent'
   };
 
   const key = formatKeyMap[normalized];
