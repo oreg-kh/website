@@ -160,6 +160,10 @@ function buildTopbar() {
     n.textContent = t(n.dataset.i18n);
   });
 
+  document.querySelectorAll('[data-i18n-aria-label]').forEach(n => {
+    n.setAttribute('aria-label', t(n.dataset.i18nAriaLabel));
+  });
+
   const picker = document.getElementById('languagePicker');
   const current = document.getElementById('languageCurrent');
   const menu = document.getElementById('languageMenu');
