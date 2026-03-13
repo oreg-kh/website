@@ -208,16 +208,18 @@ const sidebarToggleIcon = (collapsed) => collapsed
   : '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4 2.5 8 6l-4 3.5"/></svg>';
 
 // ================================================================
-// json fájlok betöltése fallback adatokkal
+// json fájl betöltése fallback nélkül
 // ================================================================
-async function fetchJsonWithFallback(path, fallback) {
-  try {
-    const res = await fetch(path);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } catch {
-    return fallback;
+async function fetchJson(path) {
+  const res = await fetch(path, {
+    cache: 'no-store'
+  });
+
+  if (!res.ok) {
+    throw new Error(`Nem sikerült betölteni: ${path} (${res.status})`);
   }
+
+  return await res.json();
 }
 
 // ================================================================
