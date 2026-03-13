@@ -224,35 +224,47 @@ async function fetchJsonWithFallback(path, fallback) {
 // alkalmazás inicializálása
 // ================================================================
 async function init() {
-  const [menu, i18n, commandDocs] = await Promise.all([
-    fetchJsonWithFallback('menu.json', DEFAULT_MENU),
-    fetchJsonWithFallback('translations.json', DEFAULT_I18N),
-    fetchJsonWithFallback('command-docs.json', DEFAULT_COMMAND_DOCS)
-  ]);
+  try {
+    const [menu, i18n, commandDocs] = await Promise.all([
+      fetchJson('menu.json'),
+      fetchJson('translations.json'),
+      fetchJson('command-docs.json')
+    ]);
 
-  state.menu = menu;
-  state.i18n = i18n;
-  state.commandDocs = commandDocs;
-  state.lang = localStorage.getItem('lang') || 'hu';
+    state.menu = menu;
+    state.i18n = i18n;
+    state.commandDocs = commandDocs;
+    state.lang = localStorage.getItem('lang') || 'hu';
 
-  const storedTheme = localStorage.getItem('theme');
-  state.theme = (storedTheme === 'dark' || storedTheme === 'light') ? storedTheme : 'light';
+    const storedTheme = localStorage.getItem('theme');
+    state.theme = (storedTheme === 'dark' || storedTheme === 'light') ? storedTheme : 'light';
 
-  applyTheme();
-  state.activeGroupId = state.menu.nav?.[0]?.id || null;
+    applyTheme();
+    state.activeGroupId = state.menu.nav?.[0]?.id || null;
 
-  createImageModal();
-  buildTopbar();
-  buildIconRail();
-  buildSidebar();
-  initSidebarToggle();
+    createImageModal();
+    buildTopbar();
+    buildIconRail();
+    buildSidebar();
+    initSidebarToggle();
 
-  renderPage(
-    getPageContent('pages.firstSteps'),
-    ['Dashboard', t('sidebar.introduction'), t('intro.firstSteps')]
-  );
+    renderPage(
+      getPageContent('pages.firstSteps'),
+      ['Dashboard', t('sidebar.introduction'), t('intro.firstSteps')]
+    );
 
-  await loadVisitorStats();
+    await loadVisitorStats();
+  } catch (error) {
+    console.error('Inicializálási hiba:', error);
+
+    document.body.innerHTML = `
+      <div style="padding:24px;font-family:Inter,Segoe UI,Arial,sans-serif;">
+        <h1>Betöltési hiba</h1>
+        <p>Nem sikerült betölteni a szükséges JSON fájlokat.</p>
+        <p>Nézd meg a böngésző konzolt is a pontos hibáért.</p>
+      </div>
+    `;
+  }
 }
 
 // ================================================================
@@ -748,7 +760,18 @@ function closeImageModal() {
 // parancs dokumentáció feloldása főparancsra és alparancsra
 // ================================================================
 function getResolvedCommandDoc(cmd) {
-  const docsConfig = state.commandDocs || DEFAULT_COMMAND_DOCS;
+  const docsConfig = state.commandDocs;
+
+  if (!docsConfig) {
+    return {
+      docsConfig: { defaultAccess: '', defaultDescription: '', defaultOptions: [], commands: {} },
+      doc: null,
+      parentDoc: null,
+      rootCommand: cmd,
+      subcommand: ''
+    };
+  }
+
   const directDoc = docsConfig.commands?.[cmd];
 
   if (directDoc) {
