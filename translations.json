@@ -30,8 +30,8 @@
     "pages.firstSteps.text": "Az alábbi lépéseket elvégezve a bot alapfunkciói használhatók lesznek a szervereden.",
     "pages.firstSteps.steps.1.title": "Bot hozzáadása a szerverhez",
     "pages.firstSteps.steps.1.text": "Használd az Add to Discord gombot, válaszd ki a szervert, majd engedélyezd a szükséges jogosultságokat. Ezután ellenőrizd, hogy a bot megjelent a szerveren.",
-    "pages.firstSteps.steps.2.title": "/set-bot-role használata",
-    "pages.firstSteps.steps.2.text": "Állíts be egy szerepkört, amely használhatja a bot adminisztratív parancsait. Érdemes külön szerepet létrehozni azoknak, akik kezelhetik a bot beállításait.",
+    "pages.firstSteps.steps.2.title": "Szerepkör beállítása",
+    "pages.firstSteps.steps.2.text": "Állíts be egy szerepkört a /set-bot-role parancs használatával, amely használhatja a bot adminisztratív parancsait. Érdemes külön szerepet létrehozni azoknak, akik kezelhetik a bot beállításait.",
     "pages.firstSteps.steps.3.title": "Világ regisztrálása",
     "pages.firstSteps.steps.3.text": "Ha az egész szerver ugyanazt a világot használja, futtasd a /register-world-server parancsot. Ha csatornánként külön világot szeretnétek használni, akkor az adott csatornában a /register-world-channel parancsot használd.",
     "pages.firstSteps.steps.4.title": "Beállítás ellenőrzése és a funkciók használata",
@@ -53,110 +53,51 @@
     "content.close": "Bezárás"
   },
   "en": {
-    "topbar.discordAdd": "Add to Discord",
-    "topbar.support": "Support",
-    "topbar.language": "Language",
-    "topbar.monthlyGoal": "Monthly goal",
-    "content.access": "Access",
-    "content.optionName": "Option name",
-    "content.optionType": "Type",
-    "content.optionRequired": "Required",
-    "content.optionSource": "Source",
-    "content.optionFormat": "Format",
-    "content.optionValue": "Possible values",
-    "content.demoImage": "Demo image",
-    "content.viewImage": "View image",
-    "content.imageNotFound": "No image was found for this command.",
-    "content.close": "Close"
+
   },
   "ar": {
-    "topbar.discordAdd": "أضف إلى ديسكورد",
-    "topbar.support": "الدعم",
-    "topbar.language": "اللغة",
-    "topbar.monthlyGoal": "الهدف الشهري"
+
   },
   "cs": {
-    "topbar.discordAdd": "Přidat na Discord",
-    "topbar.support": "Podpora",
-    "topbar.language": "Jazyk",
-    "topbar.monthlyGoal": "Měsíční cíl"
+
   },
   "nl": {
-    "topbar.discordAdd": "Toevoegen aan Discord",
-    "topbar.support": "Support",
-    "topbar.language": "Taal",
-    "topbar.monthlyGoal": "Maandelijks doel"
+
   },
   "fr": {
-    "topbar.discordAdd": "Ajouter à Discord",
-    "topbar.support": "Support",
-    "topbar.language": "Langue",
-    "topbar.monthlyGoal": "Objectif mensuel"
+
   },
   "de": {
-    "topbar.discordAdd": "Zu Discord hinzufügen",
-    "topbar.support": "Support",
-    "topbar.language": "Sprache",
-    "topbar.monthlyGoal": "Monatsziel"
+
   },
   "el": {
-    "topbar.discordAdd": "Προσθήκη στο Discord",
-    "topbar.support": "Υποστήριξη",
-    "topbar.language": "Γλώσσα",
-    "topbar.monthlyGoal": "Μηνιαίος στόχος"
+
   },
   "it": {
-    "topbar.discordAdd": "Aggiungi a Discord",
-    "topbar.support": "Supporto",
-    "topbar.language": "Lingua",
-    "topbar.monthlyGoal": "Obiettivo mensile"
+
   },
   "pl": {
-    "topbar.discordAdd": "Dodaj do Discord",
-    "topbar.support": "Wsparcie",
-    "topbar.language": "Język",
-    "topbar.monthlyGoal": "Cel miesięczny"
+
   },
   "pt-BR": {
-    "topbar.discordAdd": "Adicionar ao Discord",
-    "topbar.support": "Suporte",
-    "topbar.language": "Idioma",
-    "topbar.monthlyGoal": "Meta mensal"
+
   },
   "pt": {
-    "topbar.discordAdd": "Adicionar ao Discord",
-    "topbar.support": "Suporte",
-    "topbar.language": "Idioma",
-    "topbar.monthlyGoal": "Objetivo mensal"
+
   },
   "ro": {
-    "topbar.discordAdd": "Adaugă pe Discord",
-    "topbar.support": "Suport",
-    "topbar.language": "Limbă",
-    "topbar.monthlyGoal": "Obiectiv lunar"
+
   },
   "sk": {
-    "topbar.discordAdd": "Pridať na Discord",
-    "topbar.support": "Podpora",
-    "topbar.language": "Jazyk",
-    "topbar.monthlyGoal": "Mesačný cieľ"
+
   },
   "es": {
-    "topbar.discordAdd": "Agregar a Discord",
-    "topbar.support": "Soporte",
-    "topbar.language": "Idioma",
-    "topbar.monthlyGoal": "Meta mensual"
+
   },
   "de-CH": {
-    "topbar.discordAdd": "Zu Discord hinzufügen",
-    "topbar.support": "Support",
-    "topbar.language": "Sprache",
-    "topbar.monthlyGoal": "Monatsziel"
+
   },
   "tr": {
-    "topbar.discordAdd": "Discord'a ekle",
-    "topbar.support": "Destek",
-    "topbar.language": "Dil",
-    "topbar.monthlyGoal": "Aylık hedef"
+
   }
 }
