@@ -934,7 +934,7 @@ function getBudapestDateString() {
 }
 
 // ================================================================
-// dátum formázása: YYYY. MM. DD.
+// dátum formázása: YYYY.MM.DD HH:MM:SS
 // ================================================================
 function formatFooterDate(dateString) {
   const date = new Date(dateString);
@@ -943,19 +943,26 @@ function formatFooterDate(dateString) {
     return 'ismeretlen';
   }
 
-  const formatter = new Intl.DateTimeFormat('hu-HU', {
+  const formatter = new Intl.DateTimeFormat('en-GB', {
     timeZone: 'Europe/Budapest',
     year: 'numeric',
     month: '2-digit',
-    day: '2-digit'
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23'
   });
 
   const parts = formatter.formatToParts(date);
   const year = parts.find(p => p.type === 'year')?.value;
   const month = parts.find(p => p.type === 'month')?.value;
   const day = parts.find(p => p.type === 'day')?.value;
+  const hour = parts.find(p => p.type === 'hour')?.value;
+  const minute = parts.find(p => p.type === 'minute')?.value;
+  const second = parts.find(p => p.type === 'second')?.value;
 
-  return `${year}. ${month}. ${day}.`;
+  return `${year}.${month}.${day} ${hour}:${minute}:${second}`;
 }
 
 // ================================================================
