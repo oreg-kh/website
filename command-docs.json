@@ -138,7 +138,7 @@
           "type": "string",
           "required": true,
           "source": "autocomplete",
-          "values": ["statisztika"],
+          "values": ["statisztika típusa"],
           "format": ""
         }
       ],
@@ -168,7 +168,8 @@
           "required": false,
           "source": "input",
           "values": [
-            "true/false"
+            "true",
+            "false"
           ],
           "format": ""
         },
@@ -178,7 +179,8 @@
           "required": false,
           "source": "input",
           "values": [
-            "true/false"
+            "true",
+            "false"
           ],
           "format": ""
         },
@@ -188,7 +190,8 @@
           "required": false,
           "source": "input",
           "values": [
-            "true/false"
+            "true",
+            "false"
           ],
           "format": ""
         }
@@ -204,16 +207,16 @@
           "type": "string",
           "required": true,
           "source": "input",
-          "values": ["koordináta"],
-          "format": "max. 5 koordináta; elválasztó: vessző, szóköz, pontosvessző vagy új sor"
+          "values": ["koordináta(max. 5)"],
+          "format": "koordináták elválasztása: vessző, szóköz, pontosvessző vagy új sor"
         },
         {
           "name": "required_pack",
           "type": "number",
           "required": true,
           "source": "input",
-          "values": ["number"],
-          "format": "min: 1; max: 10000"
+          "values": ["1-10000"],
+          "format": ""
         },
         {
           "name": "knight",
@@ -221,7 +224,8 @@
           "required": true,
           "source": "input",
           "values": [
-            "true/false"
+            "true",
+            "false"
           ],
           "format": ""
         },
@@ -230,40 +234,40 @@
           "type": "number",
           "required": false,
           "source": "input",
-          "values": ["number"],
-          "format": "min: 1; max: 35000"
+          "values": ["1-35000"],
+          "format": ""
         },
         {
           "name": "sword",
           "type": "number",
           "required": false,
           "source": "input",
-          "values": ["number"],
-          "format": "min: 1; max: 35000"
+          "values": ["1-35000"],
+          "format": ""
         },
         {
           "name": "archer",
           "type": "number",
           "required": false,
           "source": "input",
-          "values": ["number"],
-          "format": "min: 1; max: 35000"
+          "values": ["1-35000"],
+          "format": ""
         },
         {
           "name": "heavy",
           "type": "number",
           "required": false,
           "source": "input",
-          "values": ["number"],
-          "format": "min: 1; max: 35000"
+          "values": ["1-35000"],
+          "format": ""
         },
         {
           "name": "spy",
           "type": "number",
           "required": false,
           "source": "input",
-          "values": ["number"],
-          "format": "min: 1; max: 35000"
+          "values": ["1-35000"],
+          "format": ""
         }
       ],
       "subcommands": {},
@@ -329,7 +333,8 @@
           "required": false,
           "source": "input",
           "values": [
-            "true/false"
+            "true",
+            "false"
           ],
           "format": ""
         },
@@ -535,7 +540,7 @@
           "type": "string",
           "required": true,
           "source": "autocomplete",
-          "values": ["statisztika"],
+          "values": ["statisztika típusa"],
           "format": ""
         },
         {
@@ -559,7 +564,8 @@
           "required": false,
           "source": "input",
           "values": [
-            "true/false"
+            "true",
+            "false"
           ],
           "format": ""
         },
@@ -569,7 +575,8 @@
           "required": false,
           "source": "input",
           "values": [
-            "true/false"
+            "true",
+            "false"
           ],
           "format": ""
         },
@@ -590,7 +597,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["klán név"],
-          "format": "több klán esetén elválasztó: &"
+          "format": "klánok elválasztása: &"
         },
         {
           "name": "tribefamily-2",
@@ -598,7 +605,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["klán név"],
-          "format": "több klán esetén elválasztó: &"
+          "format": "klánok elválasztása: &"
         },
         {
           "name": "tribefamily-3",
@@ -606,7 +613,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["klán név"],
-          "format": "több klán esetén elválasztó: &"
+          "format": "klánok elválasztása: &"
         },
         {
           "name": "tribefamily-4",
@@ -614,7 +621,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["klán név"],
-          "format": "több klán esetén elválasztó: &"
+          "format": "klánok elválasztása: &"
         },
         {
           "name": "tribefamily-5",
@@ -622,7 +629,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["klán név"],
-          "format": "több klán esetén elválasztó: &"
+          "format": "klánok elválasztása: &"
         },
         {
           "name": "tribefamily-6",
@@ -630,7 +637,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["klán név"],
-          "format": "több klán esetén elválasztó: &"
+          "format": "klánok elválasztása: &"
         },
         {
           "name": "tribefamily-7",
@@ -638,7 +645,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["klán név"],
-          "format": "több klán esetén elválasztó: &"
+          "format": "klánok elválasztása: &"
         },
         {
           "name": "tribefamily-8",
@@ -646,7 +653,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["klán név"],
-          "format": "több klán esetén elválasztó: &"
+          "format": "klánok elválasztása: &"
         },
         {
           "name": "tribefamily-9",
@@ -654,7 +661,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["klán név"],
-          "format": "több klán esetén elválasztó: &"
+          "format": "klánok elválasztása: &"
         },
         {
           "name": "tribefamily-10",
@@ -662,7 +669,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["klán név"],
-          "format": "több klán esetén elválasztó: &"
+          "format": "klánok elválasztása: &"
         }
       ],
       "subcommands": {},
@@ -693,7 +700,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["klán név"],
-          "format": "több klán esetén elválasztó: &"
+          "format": "klánok elválasztása: &"
         },
         {
           "name": "player1",
@@ -701,7 +708,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["játékos név"],
-          "format": "több játékos esetén elválasztó: &"
+          "format": "játékosok elválasztása: &"
         },
         {
           "name": "side2",
@@ -709,7 +716,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["klán név"],
-          "format": "több klán esetén elválasztó: &"
+          "format": "klánok elválasztása: &"
         },
         {
           "name": "player2",
@@ -717,7 +724,7 @@
           "required": false,
           "source": "autocomplete",
           "values": ["játékos név"],
-          "format": "több játékos esetén elválasztó: &"
+          "format": "játékosok elválasztása: &"
         }
       ],
       "subcommands": {},
@@ -738,7 +745,7 @@
           "required": true,
           "source": "autocomplete",
           "values": ["klán név"],
-          "format": "több klán esetén elválasztó: &"
+          "format": "klánok elválasztása: &"
         },
         {
           "name": "file",
@@ -771,7 +778,7 @@
           "required": true,
           "source": "autocomplete",
           "values": [],
-          "format": "több esemény esetén elválasztó: &"
+          "format": "események elválasztása: &"
         },
         {
           "name": "enabled",
@@ -779,7 +786,8 @@
           "required": true,
           "source": "input",
           "values": [
-            "true/false"
+            "true",
+            "false"
           ],
           "format": ""
         }
@@ -825,7 +833,7 @@
           "required": true,
           "source": "autocomplete",
           "values": [
-            "a világ neve"
+            "világ azonosító"
           ],
           "format": ""
         }
@@ -871,7 +879,7 @@
           "required": true,
           "source": "autocomplete",
           "values": [
-            "a világ neve"
+            "világ azonosító"
           ],
           "format": ""
         }
@@ -929,7 +937,8 @@
               "required": true,
               "source": "input",
               "values": [
-                "true/false"
+                "true",
+                "false"
               ],
               "format": ""
             }
@@ -960,7 +969,8 @@
               "required": true,
               "source": "input",
               "values": [
-                "true/false"
+                "true",
+                "false"
               ],
               "format": ""
             },
@@ -987,7 +997,8 @@
           "required": true,
           "source": "input",
           "values": [
-            "true/false"
+            "true",
+            "false"
           ],
           "format": ""
         }
@@ -1004,7 +1015,8 @@
           "required": true,
           "source": "input",
           "values": [
-            "true/false"
+            "true",
+            "false"
           ],
           "format": ""
         }
