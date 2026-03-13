@@ -8,6 +8,9 @@
   "sidebar.commands": "Parancsok",
   "sidebar.settings": "Beállítások",
   "sidebar.policies": "Irányelvek",
+  "sidebar.visitors": "Látogatók:",
+  "sidebar.visitorsToday": "Ma",
+  "sidebar.visitorsTotal": "Összesen",
   "intro.firstSteps": "Első lépések",
   "commands.registration": "Regisztráció",
   "commands.maps": "Térképek",
@@ -53,6 +56,13 @@
 
   "common.yes": "igen",
   "common.no": "nem",
+  "common.loading": "Betöltés...",
+  
+  "support.loadingName": "Betöltés...",
+  "support.loadingStatus": "Szerveradatok...",
+  "support.serverName": "Discord szerver",
+  "support.loadingData": "Adatok betöltése...",
+  "support.widgetLoading": "Widget betöltése...",
 
   "docs.defaultAccess": "Bárki",
   "docs.defaultDescription": "A bot automatizált folyamatot indít, ellenőrzéseket végez, majd naplózza az eredményt.",
