@@ -20,8 +20,13 @@ const icons = {
   support: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="currentColor" stroke="none"><path d="M267.7 576.9C267.7 576.9 267.7 576.9 267.7 576.9L229.9 603.6C222.6 608.8 213 609.4 205 605.3C197 601.2 192 593 192 584L192 512L160 512C107 512 64 469 64 416L64 192C64 139 107 96 160 96L480 96C533 96 576 139 576 192L576 416C576 469 533 512 480 512L359.6 512L267.7 576.9zM332 472.8C340.1 467.1 349.8 464 359.7 464L480 464C506.5 464 528 442.5 528 416L528 192C528 165.5 506.5 144 480 144L160 144C133.5 144 112 165.5 112 192L112 416C112 442.5 133.5 464 160 464L216 464C226.4 464 235.3 470.6 238.6 479.9C239.5 482.4 240 485.1 240 488L240 537.7C272.7 514.6 303.3 493 331.9 472.8z"/></svg>`
 };
 
-const t = (k) => state.i18n[state.lang]?.[k] || state.i18n.hu?.[k] || k;
-const el = (tag, cls, html = '') => { const e = document.createElement(tag); if (cls) e.className = cls; e.innerHTML = html; return e; };
+const t = (k) => state.i18n?.[state.lang]?.[k] || state.i18n?.hu?.[k] || k;
+const el = (tag, cls, html = '') => {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  e.innerHTML = html;
+  return e;
+};
 const chevronIcon = () => '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 6 8l4-3.5"/></svg>';
 const sidebarToggleIcon = (collapsed) => collapsed
   ? '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M8 2.5 4 6l4 3.5"/></svg>'
@@ -151,7 +156,9 @@ function buildTopbar() {
 
   initDiscordSupportWidget();
 
-  document.querySelectorAll('[data-i18n]').forEach(n => n.textContent = t(n.dataset.i18n));
+  document.querySelectorAll('[data-i18n]').forEach(n => {
+    n.textContent = t(n.dataset.i18n);
+  });
 
   const picker = document.getElementById('languagePicker');
   const current = document.getElementById('languageCurrent');
@@ -180,7 +187,9 @@ function buildTopbar() {
   };
 
   document.onclick = (e) => {
-    if (!picker.contains(e.target)) picker.classList.remove('open');
+    if (!picker.contains(e.target)) {
+      picker.classList.remove('open');
+    }
   };
 
   syncImageModalTexts();
@@ -229,9 +238,11 @@ async function initDiscordSupportWidget() {
     document.addEventListener('click', (e) => {
       if (!panel.classList.contains('open')) return;
       if (btn.contains(e.target) || panel.contains(e.target)) return;
+
       panel.classList.remove('open');
       btn.setAttribute('aria-expanded', 'false');
     });
+
     state.discordWidgetOutsideBound = true;
   }
 
@@ -655,6 +666,25 @@ function formatDisplayValue(value, fallback = '-') {
 }
 
 // ================================================================
+// csak akkor ad vissza fordítást, ha a kulcs tényleg létezik
+// ================================================================
+function translateIfExists(key, fallback = '') {
+  const translated = t(key);
+  return translated !== key ? translated : fallback;
+}
+
+// ================================================================
+// parancs fordítási kulcs alapjának felépítése
+// ================================================================
+function getCommandTranslationBase(rootCommand, subcommand = '') {
+  const root = String(rootCommand || '').replace(/^\//, '');
+
+  return subcommand
+    ? `docs.commands.${root}.subcommands.${subcommand}`
+    : `docs.commands.${root}`;
+}
+
+// ================================================================
 // hozzáférés feloldása parancs vagy alparancs szinten
 // ================================================================
 function getCommandAccess(doc, parentDoc, docsConfig) {
@@ -688,7 +718,89 @@ function getCommandOptions(doc, parentDoc, docsConfig) {
 }
 
 // ================================================================
+// parancs leírás fordításának feloldása
+// ================================================================
+function getTranslatedCommandDescription(cmd, rootCommand, subcommand, doc, parentDoc, docsConfig) {
+  const baseKey = getCommandTranslationBase(rootCommand, subcommand);
+  const defaultDescription = translateIfExists(
+    'docs.defaultDescription',
+    docsConfig.defaultDescription || 'parancs részletes leírása.'
+  );
+
+  const rawDescription = doc?.description || parentDoc?.description || defaultDescription;
+  const fallbackDescription = rawDescription || `${cmd} ${defaultDescription}`;
+
+  return translateIfExists(`${baseKey}.description`, fallbackDescription);
+}
+
+// ================================================================
+// parancs hozzáférés fordításának feloldása
+// ================================================================
+function getTranslatedCommandAccess(rootCommand, subcommand, doc, parentDoc, docsConfig) {
+  const baseKey = getCommandTranslationBase(rootCommand, subcommand);
+  const rawAccess = getCommandAccess(doc, parentDoc, docsConfig);
+  const defaultAccess = translateIfExists(
+    'docs.defaultAccess',
+    docsConfig.defaultAccess || '-'
+  );
+
+  return translateIfExists(`${baseKey}.access`, rawAccess || defaultAccess);
+}
+
+// ================================================================
+// típus mező fordítása
+// ================================================================
+function translateCommandType(type) {
+  return translateIfExists(`docs.types.${type}`, formatDisplayValue(type));
+}
+
+// ================================================================
+// egyszeres érték fordítása
+// csak azokhoz az elemekhez használjuk, amelyek nem legördülőként jelennek meg
+// ================================================================
+function translateSingleCommandValue(value) {
+  const normalized = String(value || '').trim();
+
+  const valueKeyMap = {
+    'koordináta': 'docs.values.coordinate',
+    'dátum': 'docs.values.date',
+    'egység neve': 'docs.values.unitName',
+    'klán név': 'docs.values.tribeName',
+    'statisztika típusa': 'docs.values.statType',
+    'koordináta(max. 5)': 'docs.values.coordinateMax5',
+    'játékos név': 'docs.values.playerName',
+    'minimum 1 óra; alapértelmezett: 1 óra': 'docs.values.pollDurationDefault',
+    'fájl': 'docs.values.file',
+    'világ azonosító': 'docs.values.worldId',
+    'szerep': 'docs.values.role',
+    'csatorna neve': 'docs.values.channelName'
+  };
+
+  const key = valueKeyMap[normalized];
+  return key ? translateIfExists(key, normalized) : normalized;
+}
+
+// ================================================================
+// formátum mező fordítása
+// ================================================================
+function translateCommandFormat(format) {
+  const normalized = String(format || '').trim();
+
+  const formatKeyMap = {
+    'koordináták elválasztása: vessző, szóköz, pontosvessző vagy új sor': 'docs.formats.coordinatesList',
+    'klánok elválasztása: &': 'docs.formats.tribesAmp',
+    'játékosok elválasztása: &': 'docs.formats.playersAmp',
+    'események elválasztása: &': 'docs.formats.eventsAmp'
+  };
+
+  const key = formatKeyMap[normalized];
+  return key ? translateIfExists(key, normalized) : formatDisplayValue(format);
+}
+
+// ================================================================
 // lehetséges értékek cella formázása
+// több elem esetén legördülő marad eredeti szöveggel
+// egy elem esetén fordítjuk, ha van hozzá kulcs
 // ================================================================
 function formatCommandValuesCell(option) {
   const values = Array.isArray(option?.values)
@@ -700,36 +812,35 @@ function formatCommandValuesCell(option) {
   }
 
   if (values.length === 1) {
-    return values[0];
+    return translateSingleCommandValue(values[0]);
   }
 
   return '-';
 }
 
 // ================================================================
-// parancs ismertető renderelése az új command-docs.json szerint
+// parancs ismertető renderelése fordításokkal
 // ================================================================
 function renderCommand(cmd, groupKey, subKey) {
   const imageName = cmd.replace(/^\//, '').replace(/\s+/g, '-');
   const imagePath = `images/${imageName}.png`;
-  const { docsConfig, doc, parentDoc } = getResolvedCommandDoc(cmd);
+  const { docsConfig, doc, parentDoc, rootCommand, subcommand } = getResolvedCommandDoc(cmd);
 
   const commandOptions = getCommandOptions(doc, parentDoc, docsConfig);
+  const description = getTranslatedCommandDescription(cmd, rootCommand, subcommand, doc, parentDoc, docsConfig);
+  const access = getTranslatedCommandAccess(rootCommand, subcommand, doc, parentDoc, docsConfig);
 
   const options = commandOptions.map(option => `
     <tr>
       <td>${formatDisplayValue(option.name)}</td>
-      <td>${formatDisplayValue(option.type)}</td>
-      <td>${option.required ? 'Yes' : 'No'}</td>
+      <td>${translateCommandType(option.type)}</td>
+      <td>${option.required ? t('common.yes') : t('common.no')}</td>
       <td>${formatDisplayValue(option.source)}</td>
-      <td>${formatDisplayValue(option.format)}</td>
+      <td>${translateCommandFormat(option.format)}</td>
       <td>${formatCommandValuesCell(option)}</td>
     </tr>
   `).join('');
 
-  const fallbackDescription = `${cmd} ${docsConfig.defaultDescription || 'parancs részletes leírása.'}`;
-  const description = doc?.description || parentDoc?.description || fallbackDescription;
-  const access = getCommandAccess(doc, parentDoc, docsConfig);
   const tableBody = options || `<tr><td colspan="6">-</td></tr>`;
 
   setTopBreadcrumb(['Dashboard', t('sidebar.commands'), t(subKey), cmd]);
@@ -774,10 +885,13 @@ function renderCommand(cmd, groupKey, subKey) {
 function renderAppearance() {
   setTopBreadcrumb(['Dashboard', t('sidebar.settings'), t('settings.appearance')]);
   document.getElementById('content').innerHTML = `<div class="card"><h1>${t('settings.appearance')}</h1><div class="list-grid">${['dark', 'light'].map(k => `<button class="sub-item" data-theme="${k}">${t('settings.' + k)}</button>`).join('')}</div></div>`;
-  document.querySelectorAll('[data-theme]').forEach(b => b.onclick = () => {
-    state.theme = b.dataset.theme;
-    localStorage.setItem('theme', state.theme);
-    applyTheme();
+
+  document.querySelectorAll('[data-theme]').forEach(b => {
+    b.onclick = () => {
+      state.theme = b.dataset.theme;
+      localStorage.setItem('theme', state.theme);
+      applyTheme();
+    };
   });
 }
 
@@ -787,13 +901,16 @@ function renderAppearance() {
 function renderLanguageSettings() {
   setTopBreadcrumb(['Dashboard', t('sidebar.settings'), t('settings.language')]);
   document.getElementById('content').innerHTML = `<div class="card"><h1>${t('settings.language')}</h1><div class="list-grid">${state.menu.languages.map(l => `<button class="sub-item" data-lang="${l.code}"><span class="btn-icon">${svgFlag(l.country)}</span> ${l.name}</button>`).join('')}</div></div>`;
-  document.querySelectorAll('[data-lang]').forEach(b => b.onclick = () => {
-    state.lang = b.dataset.lang;
-    localStorage.setItem('lang', state.lang);
-    buildTopbar();
-    buildIconRail();
-    buildSidebar();
-    renderLanguageSettings();
+
+  document.querySelectorAll('[data-lang]').forEach(b => {
+    b.onclick = () => {
+      state.lang = b.dataset.lang;
+      localStorage.setItem('lang', state.lang);
+      buildTopbar();
+      buildIconRail();
+      buildSidebar();
+      renderLanguageSettings();
+    };
   });
 }
 
